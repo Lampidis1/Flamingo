@@ -8,43 +8,35 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <style>
-:root{
-  --ab:#072957;--abm:#0d3d7a;--abl:#e8edf5;--abll:#f0f4fa;
-  --pk:#e85d8a;--pkl:#fce4ef;--tl:#2bb5a0;--co:#f07054;--gd:#c49b0a;
-  --pu:#7c4daa;--pul:#f0eafa;
-  --wh:#fff;--tx:#1a2340;--ts:#5a6a8a;--bd:#dde3ee;
-  --sh:0 2px 12px rgba(7,41,87,.10);
-}
+:root{--ab:#072957;--abm:#0d3d7a;--abl:#e8edf5;--abll:#f0f4fa;--pk:#e85d8a;--pkl:#fce4ef;--tl:#2bb5a0;--co:#f07054;--gd:#c49b0a;--pu:#7c4daa;--pul:#f0eafa;--wh:#fff;--tx:#1a2340;--ts:#5a6a8a;--bd:#dde3ee;--sh:0 2px 12px rgba(7,41,87,.10)}
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'Nunito',sans-serif;background:var(--abll);color:var(--tx);min-height:100vh}
 .hdr{background:var(--ab);box-shadow:0 3px 16px rgba(7,41,87,.3);position:sticky;top:0;z-index:100}
 .hdr-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:9px 18px}
 .logo-abs{height:40px}
 .hdr-div{width:1px;height:34px;background:rgba(255,255,255,.22)}
-.hdr-t{flex:1}
-.hdr-t h1{font-family:'Fredoka One',sans-serif;color:#fff;font-size:1.25rem;display:flex;align-items:center;gap:7px}
+.hdr-t{flex:1}.hdr-t h1{font-family:'Fredoka One',sans-serif;color:#fff;font-size:1.25rem;display:flex;align-items:center;gap:7px}
 .hdr-t p{color:rgba(255,255,255,.6);font-size:.7rem;font-weight:600;margin-top:1px}
 .mode-bdg{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:18px;padding:4px 13px;color:#fff;font-size:.74rem;font-weight:700}
 .btn-tsor{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;padding:5px 12px;border-radius:15px;font-size:.72rem;font-weight:700;cursor:pointer;font-family:'Nunito',sans-serif;margin-left:6px}
 .nav{background:var(--abm);display:flex;padding:0 18px;overflow-x:auto;border-bottom:3px solid rgba(255,255,255,.07)}
 .ntab{padding:9px 13px;font-size:.76rem;font-weight:700;color:rgba(255,255,255,.55);border:none;background:transparent;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .2s;margin-bottom:-3px;font-family:'Nunito',sans-serif}
-.ntab:hover{color:rgba(255,255,255,.9)}
-.ntab.active{color:#fff;border-bottom-color:var(--pk)}
-.ntab.tsor{display:none}
-.is-tsor .ntab.tsor{display:block}
+.ntab:hover{color:rgba(255,255,255,.9)}.ntab.active{color:#fff;border-bottom-color:var(--pk)}
+.ntab.tsor{display:none}.is-tsor .ntab.tsor{display:block}
 /* MODAL */
 .mov{position:fixed;inset:0;background:rgba(7,41,87,.72);display:flex;align-items:center;justify-content:center;z-index:500;backdrop-filter:blur(5px)}
 .mov.hid{display:none}
-.mbox{background:#fff;border-radius:20px;padding:34px;width:350px;max-width:95vw;box-shadow:0 20px 60px rgba(7,41,87,.3);text-align:center}
-.mbox .fbi{font-size:48px;margin-bottom:5px}
-.mbox h2{font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.4rem;margin-bottom:3px}
-.mbox p{color:var(--ts);font-size:.79rem;margin-bottom:16px}
-.mbox input{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.87rem;margin-bottom:8px;color:var(--tx);background:var(--abll)}
+.mbox{background:#fff;border-radius:18px;padding:28px;width:420px;max-width:97vw;box-shadow:0 20px 60px rgba(7,41,87,.3)}
+.mbox.center{text-align:center}
+.mbox .fbi{font-size:46px;margin-bottom:5px}
+.mbox h2{font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.35rem;margin-bottom:3px}
+.mbox>p{color:var(--ts);font-size:.78rem;margin-bottom:15px}
+.mbox input{width:100%;padding:9px 12px;border:1.5px solid var(--bd);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.86rem;margin-bottom:8px;color:var(--tx);background:var(--abll)}
 .mbox input:focus{outline:none;border-color:var(--ab)}
 .btn-login{width:100%;padding:11px;background:var(--ab);color:#fff;border:none;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer}
 .btn-login:hover{background:var(--abm)}
-.lerr{color:var(--co);font-size:.74rem;margin-top:4px;min-height:15px}
-.btn-skip{background:none;border:none;color:var(--ts);font-size:.74rem;cursor:pointer;margin-top:10px;text-decoration:underline;font-family:'Nunito',sans-serif}
+.lerr{color:var(--co);font-size:.73rem;margin-top:3px;min-height:14px}
+.btn-skip{background:none;border:none;color:var(--ts);font-size:.73rem;cursor:pointer;margin-top:10px;text-decoration:underline;font-family:'Nunito',sans-serif}
 /* LAYOUT */
 .con{max-width:1100px;margin:0 auto;padding:14px 18px}
 .sec{display:none}.sec.active{display:block}
@@ -76,26 +68,23 @@ body{font-family:'Nunito',sans-serif;background:var(--abll);color:var(--tx);min-
 .fg{display:flex;flex-direction:column;gap:3px;margin-bottom:8px}
 .fg label{font-size:.69rem;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.4px}
 .fg input,.fg select,.fg textarea{padding:7px 10px;border:1.5px solid var(--bd);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.8rem;color:var(--tx);background:var(--abll)}
-.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--ab);background:#fff}
-.fg input[type=checkbox]{width:auto;accent-color:var(--ab)}
+.fg input:focus,.fg select:focus{outline:none;border-color:var(--ab);background:#fff}
 .fr2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
 .fr3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
 .btn{padding:8px 15px;border-radius:18px;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:.81rem;cursor:pointer;transition:all .2s}
 .bp{background:var(--ab);color:#fff}.bp:hover{background:var(--abm);transform:translateY(-1px)}
 .bt{background:#d4f5ef;color:#0d6b5e}.bo{background:transparent;border:2px solid var(--ab);color:var(--ab)}
-.bpk{background:var(--pk);color:#fff}.bpu{background:var(--pu);color:#fff}
+.byellow{background:#fff0cc;color:#7a5800;border:none}
 .bsm{padding:3px 9px;font-size:.68rem;border-radius:12px}
 .brow{display:flex;gap:7px;justify-content:flex-end;margin-top:10px;flex-wrap:wrap}
 /* UPLOAD */
-.upz{border:2px dashed var(--bd);border-radius:10px;padding:13px;text-align:center;cursor:pointer;background:var(--abll);transition:all .2s}
+.upz{border:2px dashed var(--bd);border-radius:10px;padding:12px;text-align:center;cursor:pointer;background:var(--abll);transition:all .2s}
 .upz:hover,.upz.drag{background:var(--abl);border-color:var(--ab)}
-.upz p{color:var(--ts);font-size:.76rem;font-weight:600}
+.upz p{color:var(--ts);font-size:.75rem;font-weight:600}
 /* ALERT */
 .alert{padding:8px 12px;border-radius:8px;font-size:.77rem;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.as{background:#d4f5ef;color:#0d6b5e;border:1px solid #9de8d8}
-.ai{background:var(--abl);color:var(--ab);border:1px solid #b3c8e8}
-.aw{background:#fff0cc;color:#8a6600;border:1px solid #ffe08a}
-.ae{background:#fde8e8;color:#b52b2b;border:1px solid #f5b5b5}
+.as{background:#d4f5ef;color:#0d6b5e;border:1px solid #9de8d8}.ai{background:var(--abl);color:var(--ab);border:1px solid #b3c8e8}
+.aw{background:#fff0cc;color:#8a6600;border:1px solid #ffe08a}.ae{background:#fde8e8;color:#b52b2b;border:1px solid #f5b5b5}
 /* MONTHS */
 .mo{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-top:8px}
 .mp{background:var(--abll);border-radius:8px;padding:6px 3px;text-align:center;border:1.5px solid var(--bd)}
@@ -111,45 +100,38 @@ body{font-family:'Nunito',sans-serif;background:var(--abll);color:var(--tx);min-
 .spin{display:inline-block;width:18px;height:18px;border:2px solid var(--abl);border-top-color:var(--ab);border-radius:50%;animation:spin .8s linear infinite;margin-right:6px;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 .eo{display:none}.is-tsor .eo{display:block}
-.eo-f{display:none}.is-tsor .eo-f{display:flex}
-/* INICIATIVA CARD */
+/* INICIATIVA */
 .icard{background:var(--wh);border-radius:12px;border:1px solid var(--bd);padding:14px;margin-bottom:10px;box-shadow:var(--sh)}
 .icard-hdr{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px}
-.icard-icon{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
-.icard-icon.act{background:var(--abl)}
-.icard-icon.don{background:var(--pkl)}
+.icard-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0}
+.icard-icon.act{background:var(--abl)}.icard-icon.don{background:var(--pkl)}
 .icard-meta{flex:1}
-.icard-meta h4{font-family:'Fredoka One',sans-serif;font-size:.95rem;color:var(--ab)}
-.icard-meta p{font-size:.72rem;color:var(--ts);margin-top:1px}
-.icard-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
-.prog-wrap{margin-bottom:10px}
-.prog-lbl{display:flex;justify-content:space-between;font-size:.72rem;font-weight:700;margin-bottom:3px}
-.alumnos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
-.alu-row{display:flex;align-items:center;gap:7px;padding:6px 9px;border-radius:8px;border:1px solid var(--bd);background:var(--abll);font-size:.76rem}
+.icard-meta h4{font-family:'Fredoka One',sans-serif;font-size:.93rem;color:var(--ab)}
+.icard-meta p{font-size:.71rem;color:var(--ts);margin-top:1px}
+.alumnos-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:6px}
+.alu-row{display:flex;align-items:center;gap:6px;padding:6px 8px;border-radius:8px;border:1px solid var(--bd);background:var(--abll);font-size:.74rem}
 .alu-row.pagado{background:#d4f5ef;border-color:#9de8d8}
-.alu-row.parcial{background:#fff0cc;border-color:#ffe08a}
-.tipo-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:12px;font-size:.68rem;font-weight:700}
-.tipo-act{background:var(--abl);color:var(--ab)}
-.tipo-don{background:var(--pkl);color:#a02060}
-.anon-tag{background:#f3e8ff;color:#6b21a8;font-size:.65rem;font-weight:700;padding:2px 7px;border-radius:10px}
+.tipo-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:11px;font-size:.67rem;font-weight:700}
+.tipo-act{background:var(--abl);color:var(--ab)}.tipo-don{background:var(--pkl);color:#a02060}
+.anon-tag{background:#f3e8ff;color:#6b21a8;font-size:.64rem;font-weight:700;padding:2px 7px;border-radius:10px}
 .switch-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.switch-row label{font-size:.76rem;font-weight:700;color:var(--ts)}
-/* Toggle switch */
-.toggle{position:relative;display:inline-block;width:38px;height:20px;flex-shrink:0}
+.switch-row label{font-size:.74rem;font-weight:700;color:var(--ts)}
+.toggle{position:relative;display:inline-block;width:36px;height:19px;flex-shrink:0}
 .toggle input{opacity:0;width:0;height:0}
-.slider{position:absolute;cursor:pointer;inset:0;background:var(--bd);border-radius:20px;transition:.3s}
-.slider:before{content:'';position:absolute;height:14px;width:14px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
+.slider{position:absolute;cursor:pointer;inset:0;background:var(--bd);border-radius:19px;transition:.3s}
+.slider:before{content:'';position:absolute;height:13px;width:13px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s}
 input:checked+.slider{background:var(--ab)}
-input:checked+.slider:before{transform:translateX(18px)}
+input:checked+.slider:before{transform:translateX(17px)}
+/* EDIT HIGHLIGHT */
+.editing-row td{background:#fffbea!important}
 </style>
 </head>
 <body>
 
-<!-- LOGIN MODAL -->
+<!-- MODAL LOGIN -->
 <div class="mov hid" id="login-modal">
-  <div class="mbox">
-    <div class="fbi">🦩</div>
-    <h2>Área Tesorero</h2>
+  <div class="mbox center">
+    <div class="fbi">🦩</div><h2>Área Tesorero</h2>
     <p>Ingresa tus credenciales para editar</p>
     <input type="text" id="lu" placeholder="Usuario" autocomplete="username">
     <input type="password" id="lp" placeholder="Contraseña" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
@@ -159,21 +141,131 @@ input:checked+.slider:before{transform:translateX(18px)}
   </div>
 </div>
 
+<!-- MODAL EDITAR PAGO CUOTA -->
+<div class="mov hid" id="modal-edit-pago">
+  <div class="mbox" style="width:480px">
+    <h2 style="font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.2rem;margin-bottom:3px">✏️ Editar pago de cuota</h2>
+    <p style="color:var(--ts);font-size:.75rem;margin-bottom:14px">Modifica los datos del pago seleccionado</p>
+    <input type="hidden" id="ep-id">
+    <div class="fr2">
+      <div class="fg"><label>Alumno</label><select id="ep-alu"></select></div>
+      <div class="fg"><label>Mes</label><select id="ep-mes"><option>Marzo</option><option>Abril</option><option>Mayo</option><option>Junio</option><option>Julio</option><option>Agosto</option><option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option></select></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label>Monto ($)</label><input type="number" id="ep-mon"></div>
+      <div class="fg"><label>Fecha</label><input type="date" id="ep-fec"></div>
+    </div>
+    <div class="fg"><label>Emisor</label><input id="ep-emi" placeholder="Quien transfirió"></div>
+    <div class="fr2">
+      <div class="fg"><label>N° Operación</label><input id="ep-op"></div>
+      <div class="fg"><label>Banco</label><input id="ep-ban"></div>
+    </div>
+    <div class="fg"><label>Notas</label><input id="ep-not"></div>
+    <div id="ep-alert"></div>
+    <div class="brow">
+      <button class="btn bo bsm" onclick="closeModalEditPago()">Cancelar</button>
+      <button class="btn byellow" onclick="guardarEditPago()" id="btn-ep">💾 Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR EGRESO -->
+<div class="mov hid" id="modal-edit-egreso">
+  <div class="mbox" style="width:460px">
+    <h2 style="font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.2rem;margin-bottom:3px">✏️ Editar egreso</h2>
+    <p style="color:var(--ts);font-size:.75rem;margin-bottom:14px">Modifica los datos del egreso seleccionado</p>
+    <input type="hidden" id="ee-id">
+    <div class="fr3">
+      <div class="fg"><label>Actividad</label><input id="ee-act"></div>
+      <div class="fg"><label>Descripción</label><input id="ee-des"></div>
+      <div class="fg"><label>Monto ($)</label><input type="number" id="ee-mon"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label>Fecha</label><input type="date" id="ee-fec"></div>
+      <div class="fg"><label>Categoría</label><select id="ee-cat"><option>🎉 Celebración</option><option>🎨 Materiales</option><option>🍰 Alimentación</option><option>🎁 Regalo</option><option>🚌 Paseo</option><option>📋 Administrativo</option><option>🌟 Otro</option></select></div>
+    </div>
+    <div id="ee-alert"></div>
+    <div class="brow">
+      <button class="btn bo bsm" onclick="closeModalEditEgreso()">Cancelar</button>
+      <button class="btn byellow" onclick="guardarEditEgreso()" id="btn-ee">💾 Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL EDITAR PAGO INICIATIVA -->
+<div class="mov hid" id="modal-edit-pinic">
+  <div class="mbox" style="width:460px">
+    <h2 style="font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.2rem;margin-bottom:3px">✏️ Editar pago de actividad</h2>
+    <p style="color:var(--ts);font-size:.75rem;margin-bottom:14px" id="epi-subtit"></p>
+    <input type="hidden" id="epi-id">
+    <div class="fr2">
+      <div class="fg"><label>Alumno</label><select id="epi-alu"></select></div>
+      <div class="fg" id="epi-monto-wrap"><label>Monto ($)</label><input type="number" id="epi-mon"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label>Fecha</label><input type="date" id="epi-fec"></div>
+      <div class="fg"><label>N° Operación</label><input id="epi-op"></div>
+    </div>
+    <div class="fg"><label>Emisor</label><input id="epi-emi"></div>
+    <div class="fg"><label>Banco</label><input id="epi-ban"></div>
+    <div class="switch-row" id="epi-anon-wrap">
+      <label class="toggle"><input type="checkbox" id="epi-anon"><span class="slider"></span></label>
+      <label for="epi-anon">No mostrar monto a otros apoderados</label>
+    </div>
+    <div class="fg"><label>Notas</label><input id="epi-not"></div>
+    <div id="epi-alert"></div>
+    <div class="brow">
+      <button class="btn bo bsm" onclick="closeModalEditPinic()">Cancelar</button>
+      <button class="btn byellow" onclick="guardarEditPinic()" id="btn-epi">💾 Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL REGISTRAR PAGO INICIATIVA -->
+<div class="mov hid" id="modal-pago-inic">
+  <div class="mbox" style="width:460px">
+    <h2 style="font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.2rem;margin-bottom:3px" id="mpag-titulo">Registrar pago</h2>
+    <p style="color:var(--ts);font-size:.75rem;margin-bottom:14px" id="mpag-subtit"></p>
+    <div class="fr2">
+      <div class="fg"><label>Alumno</label><select id="mp-alu"></select></div>
+      <div class="fg" id="mp-monto-wrap"><label>Monto ($)</label><input type="number" id="mp-mon"></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label>Fecha</label><input type="date" id="mp-fec"></div>
+      <div class="fg"><label>N° Operación</label><input id="mp-op" placeholder="opcional"></div>
+    </div>
+    <div class="fg"><label>Emisor</label><input id="mp-emi"></div>
+    <div class="fg"><label>Banco</label><input id="mp-ban"></div>
+    <div class="switch-row" id="mp-anon-wrap" style="display:none">
+      <label class="toggle"><input type="checkbox" id="mp-anon"><span class="slider"></span></label>
+      <label for="mp-anon" style="font-size:.73rem">No mostrar monto a otros apoderados</label>
+    </div>
+    <div class="fg"><label>Comprobante</label>
+      <div class="upz" style="padding:9px" onclick="document.getElementById('fi2').click()">
+        <p style="font-size:.72rem">📎 Haz clic para adjuntar</p>
+        <div id="fp2" style="font-size:.71rem;color:var(--tl);font-weight:700"></div>
+      </div>
+      <input type="file" id="fi2" accept="image/*,.pdf" style="display:none" onchange="setFile(this.files[0],'fp2',2)">
+    </div>
+    <div class="fg"><label>Notas</label><input id="mp-not"></div>
+    <div id="mp-alert"></div>
+    <div class="brow">
+      <button class="btn bo bsm" onclick="closeModalPago()">Cancelar</button>
+      <button class="btn bp" onclick="guardarPagoIniciativa()" id="btn-mp">✅ Registrar pago</button>
+    </div>
+  </div>
+</div>
+
 <!-- HEADER -->
 <div class="hdr">
   <div class="hdr-in">
     <img class="logo-abs" id="logo-abs" src="" alt="ABS">
     <div class="hdr-div"></div>
-    <div class="hdr-t">
-      <h1>🦩 Kinder Flamingo</h1>
-      <p>Tesorería del Curso · ABS 2026</p>
-    </div>
+    <div class="hdr-t"><h1>🦩 Kinder Flamingo</h1><p>Tesorería del Curso · ABS 2026</p></div>
     <div class="mode-bdg"><span id="mode-lbl">👁️ Vista Apoderado</span></div>
     <button class="btn-tsor" id="btn-tsor" onclick="showLogin()">🔐 Tesorero</button>
   </div>
 </div>
-
-<!-- NAV -->
 <div class="nav">
   <button class="ntab active" onclick="showTab('dashboard')">📊 Resumen</button>
   <button class="ntab" onclick="showTab('alumnos')">👧 Alumnos</button>
@@ -185,11 +277,8 @@ input:checked+.slider:before{transform:translateX(18px)}
 </div>
 
 <div class="con" id="app">
-  <div class="tsor-banner">
-    <span>🔐 Modo Tesorero activo — Puedes registrar y editar información</span>
-    <button class="btn-logout" onclick="doLogout()">Cerrar sesión</button>
-  </div>
-  <div class="ro-notice">👁️ Vista de <strong style="margin:0 3px">solo lectura</strong> para apoderados. Para editar inicia sesión como Tesorero.</div>
+  <div class="tsor-banner"><span>🔐 Modo Tesorero activo</span><button class="btn-logout" onclick="doLogout()">Cerrar sesión</button></div>
+  <div class="ro-notice">👁️ Vista de <strong style="margin:0 3px">solo lectura</strong> para apoderados.</div>
 
   <!-- DASHBOARD -->
   <div class="sec active" id="sec-dashboard">
@@ -204,25 +293,17 @@ input:checked+.slider:before{transform:translateX(18px)}
       <div class="sc g"><div class="n" id="s-sal">—</div><div class="l">Saldo</div></div>
       <div class="sc pu"><div class="n" id="s-inic">—</div><div class="l">Actividades</div></div>
     </div>
-    <div class="card">
-      <h3>🗓️ Cuotas 2026 — $12.000/mes · Mar–Dic</h3>
-      <div class="mo" id="months-grid"></div>
-    </div>
-    <div class="card">
-      <h3>📋 Últimos pagos de cuotas</h3>
+    <div class="card"><h3>🗓️ Cuotas 2026 — $12.000/mes · Mar–Dic</h3><div class="mo" id="months-grid"></div></div>
+    <div class="card"><h3>📋 Últimos pagos de cuotas</h3>
       <div class="tw"><table><thead><tr><th>Alumno</th><th>Emisor</th><th>Monto</th><th>Mes</th><th>Fecha</th><th>N° Op.</th><th>Estado</th></tr></thead>
       <tbody id="rec-tbody"><tr><td colspan="7" class="nd"><span class="spin"></span>Cargando...</td></tr></tbody></table></div>
     </div>
-    <div class="card">
-      <h3>🎽 Actividades y donaciones activas</h3>
-      <div id="dash-iniciativas"><div class="nd"><span class="spin"></span>Cargando...</div></div>
-    </div>
+    <div class="card"><h3>🎽 Actividades y donaciones activas</h3><div id="dash-iniciativas"><div class="nd"><span class="spin"></span>Cargando...</div></div></div>
   </div>
 
   <!-- ALUMNOS -->
   <div class="sec" id="sec-alumnos">
-    <div class="card">
-      <h3>👧 Lista del curso — 28 alumnos</h3>
+    <div class="card"><h3>👧 Lista del curso — 28 alumnos</h3>
       <div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">
         <input type="text" id="buscar" placeholder="Buscar alumno o apellido..." style="flex:1;min-width:130px;padding:7px 10px;border:1.5px solid var(--bd);border-radius:8px;font-family:'Nunito',sans-serif;font-size:.8rem;background:var(--abll)" oninput="renderAlumnos()">
         <button class="btn bp bsm eo" onclick="toggleFA()" style="padding:6px 12px">+ Agregar</button>
@@ -243,8 +324,7 @@ input:checked+.slider:before{transform:translateX(18px)}
 
   <!-- CUOTA MENSUAL -->
   <div class="sec" id="sec-registrar">
-    <div class="card">
-      <h3>💸 Registrar pago de cuota mensual</h3>
+    <div class="card"><h3>💸 Registrar cuota mensual</h3>
       <div class="fr2">
         <div class="fg"><label>Alumno</label><select id="p-alu" onchange="autoMonto()"><option value="">— seleccionar —</option></select></div>
         <div class="fg"><label>Mes pagado</label><select id="p-mes"><option>Marzo</option><option>Abril</option><option>Mayo</option><option>Junio</option><option>Julio</option><option>Agosto</option><option>Septiembre</option><option>Octubre</option><option>Noviembre</option><option>Diciembre</option></select></div>
@@ -253,107 +333,62 @@ input:checked+.slider:before{transform:translateX(18px)}
         <div class="fg"><label>Monto ($)</label><input type="number" id="p-mon" value="12000"></div>
         <div class="fg"><label>Fecha pago</label><input type="date" id="p-fec"></div>
       </div>
-      <div class="fg"><label>Nombre del emisor (quien transfirió)</label><input id="p-emi" placeholder="Ej: Angelica Edith Morgado" oninput="matchEmisor(this.value)"></div>
+      <div class="fg"><label>Nombre del emisor</label><input id="p-emi" placeholder="Ej: Angelica Edith Morgado" oninput="matchEmisor(this.value)"></div>
       <div id="match-box" style="display:none" class="alert ai">🔍 <span id="match-txt"></span></div>
       <div class="fr2">
-        <div class="fg"><label>N° operación</label><input id="p-op" placeholder="153060837367"></div>
-        <div class="fg"><label>Banco origen</label><input id="p-ban" placeholder="Banco de Chile"></div>
+        <div class="fg"><label>N° operación</label><input id="p-op"></div>
+        <div class="fg"><label>Banco</label><input id="p-ban"></div>
       </div>
       <div class="fg"><label>Comprobante</label>
-        <div class="upz" id="upz" onclick="document.getElementById('fi').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="doDrop(event,'fi','fp')">
-          <div style="font-size:24px;margin-bottom:4px">📎</div>
+        <div class="upz" id="upz" onclick="document.getElementById('fi').click()" ondragover="event.preventDefault();this.classList.add('drag')" ondragleave="this.classList.remove('drag')" ondrop="doDrop(event)">
+          <div style="font-size:22px;margin-bottom:4px">📎</div>
           <p>Arrastra el comprobante o haz clic</p>
-          <small style="color:#9aa6bc;font-size:.68rem">JPG · PNG · PDF · máx 5MB</small>
-          <div id="fp" style="margin-top:4px;font-size:.74rem;color:var(--tl);font-weight:700"></div>
+          <small style="color:#9aa6bc;font-size:.67rem">JPG · PNG · PDF · máx 5MB</small>
+          <div id="fp" style="margin-top:4px;font-size:.73rem;color:var(--tl);font-weight:700"></div>
         </div>
-        <input type="file" id="fi" accept="image/*,.pdf" style="display:none" onchange="setFile(this.files[0],'fp')">
+        <input type="file" id="fi" accept="image/*,.pdf" style="display:none" onchange="setFile(this.files[0],'fp',1)">
       </div>
-      <div class="fg"><label>Notas</label><input id="p-not" placeholder="Ej: pago en 2 partes..."></div>
+      <div class="fg"><label>Notas</label><input id="p-not"></div>
       <div class="brow"><button class="btn bp" onclick="guardarPago()" id="btn-pago">✅ Registrar cuota</button></div>
     </div>
     <div id="pago-alert"></div>
+    <!-- HISTORIAL DE PAGOS con edición -->
+    <div class="card"><h3>📋 Historial de pagos registrados</h3>
+      <div class="tw"><table><thead><tr><th>Alumno</th><th>Mes</th><th>Monto</th><th>Fecha</th><th>Emisor</th><th>N° Op.</th><th>Banco</th><th>Notas</th><th></th></tr></thead>
+      <tbody id="hist-tbody"><tr><td colspan="9" class="nd"><span class="spin"></span>Cargando...</td></tr></tbody></table></div>
+    </div>
   </div>
 
   <!-- INICIATIVAS -->
   <div class="sec" id="sec-iniciativas">
     <div id="alert-inic"></div>
-
-    <!-- CREAR NUEVA (solo tesorero) -->
     <div class="card eo" id="form-inic-wrap">
       <h3>✨ Nueva actividad o donación</h3>
       <div class="fr2">
         <div class="fg"><label>Nombre</label><input id="i-nom" placeholder="Ej: Compra de poleras, Teletón 2026"></div>
-        <div class="fg"><label>Tipo</label>
-          <select id="i-tipo" onchange="toggleTipoForm()">
-            <option value="actividad">🎽 Actividad extra (monto fijo)</option>
-            <option value="donacion">❤️ Donación (monto libre)</option>
-          </select>
-        </div>
+        <div class="fg"><label>Tipo</label><select id="i-tipo" onchange="toggleTipoForm()"><option value="actividad">🎽 Actividad extra (monto fijo)</option><option value="donacion">❤️ Donación (monto libre)</option></select></div>
       </div>
       <div class="fg"><label>Descripción</label><input id="i-desc" placeholder="Detalle de la actividad o campaña"></div>
-
-      <!-- Solo actividad -->
       <div id="f-actividad">
         <div class="fr2">
           <div class="fg"><label>Monto por alumno ($)</label><input type="number" id="i-monto" placeholder="5000"></div>
           <div class="fg"><label>Fecha límite de pago</label><input type="date" id="i-fecha"></div>
         </div>
       </div>
-
-      <!-- Solo donación -->
       <div id="f-donacion" style="display:none">
         <div class="switch-row" style="margin-top:4px">
           <label class="toggle"><input type="checkbox" id="i-anon" checked><span class="slider"></span></label>
-          <label for="i-anon">🔒 Ocultar montos — los apoderados NO verán cuánto donó cada uno</label>
+          <label for="i-anon">🔒 Ocultar montos — apoderados NO verán cuánto donó cada uno</label>
         </div>
       </div>
-
       <div class="brow"><button class="btn bp" onclick="crearIniciativa()" id="btn-inic">✨ Crear iniciativa</button></div>
     </div>
-
-    <!-- LISTA DE INICIATIVAS -->
     <div id="inic-list"><div class="nd"><span class="spin"></span>Cargando actividades...</div></div>
-
-    <!-- MODAL REGISTRAR PAGO INICIATIVA -->
-    <div class="mov hid" id="modal-pago-inic">
-      <div class="mbox" style="width:460px;max-width:97vw;text-align:left;padding:26px">
-        <h2 style="font-family:'Fredoka One',sans-serif;color:var(--ab);font-size:1.2rem;margin-bottom:3px" id="mpag-titulo">Registrar pago</h2>
-        <p style="color:var(--ts);font-size:.76rem;margin-bottom:14px" id="mpag-subtit"></p>
-        <div class="fr2">
-          <div class="fg"><label>Alumno</label><select id="mp-alu"><option value="">— seleccionar —</option></select></div>
-          <div class="fg" id="mp-monto-wrap"><label>Monto ($)</label><input type="number" id="mp-mon" placeholder="0"></div>
-        </div>
-        <div class="fr2">
-          <div class="fg"><label>Fecha</label><input type="date" id="mp-fec"></div>
-          <div class="fg"><label>N° operación</label><input id="mp-op" placeholder="opcional"></div>
-        </div>
-        <div class="fg"><label>Nombre emisor</label><input id="mp-emi" placeholder="Quien realizó la transferencia"></div>
-        <div class="fg"><label>Banco</label><input id="mp-ban" placeholder="Banco de Chile"></div>
-        <div id="mp-anon-wrap" style="display:none" class="switch-row" style="margin-bottom:8px">
-          <label class="toggle"><input type="checkbox" id="mp-anon"><span class="slider"></span></label>
-          <label for="mp-anon" style="font-size:.75rem;font-weight:700;color:var(--ts)">No mostrar el monto a otros apoderados</label>
-        </div>
-        <div class="fg"><label>Comprobante</label>
-          <div class="upz" style="padding:10px" onclick="document.getElementById('fi2').click()">
-            <p style="font-size:.73rem">📎 Haz clic para adjuntar</p>
-            <div id="fp2" style="font-size:.72rem;color:var(--tl);font-weight:700"></div>
-          </div>
-          <input type="file" id="fi2" accept="image/*,.pdf" style="display:none" onchange="setFile(this.files[0],'fp2')">
-        </div>
-        <div class="fg"><label>Notas</label><input id="mp-not" placeholder="opcional"></div>
-        <div id="mp-alert"></div>
-        <div class="brow">
-          <button class="btn bo bsm" onclick="closeModalPago()">Cancelar</button>
-          <button class="btn bp" onclick="guardarPagoIniciativa()" id="btn-mp">✅ Registrar pago</button>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- EGRESOS -->
   <div class="sec" id="sec-egresos">
-    <div class="card">
-      <h3>💸 Libro de egresos del curso</h3>
+    <div class="card"><h3>💸 Libro de egresos</h3>
       <div style="background:var(--abll);border:1.5px solid var(--bd);border-radius:10px;padding:12px;margin-bottom:10px">
         <div class="stit">Nuevo egreso</div>
         <div class="fr3">
@@ -378,20 +413,13 @@ input:checked+.slider:before{transform:translateX(18px)}
 
   <!-- COMPROBANTES -->
   <div class="sec" id="sec-comprobantes">
-    <div class="card">
-      <h3>📎 Comprobantes — Cuotas mensuales</h3>
-      <div id="comp-list"><div class="nd"><span class="spin"></span>Cargando...</div></div>
-    </div>
-    <div class="card">
-      <h3>🎽 Comprobantes — Actividades y donaciones</h3>
-      <div id="comp-inic-list"><div class="nd"><span class="spin"></span>Cargando...</div></div>
-    </div>
+    <div class="card"><h3>📎 Comprobantes — Cuotas mensuales</h3><div id="comp-list"><div class="nd"><span class="spin"></span>Cargando...</div></div></div>
+    <div class="card"><h3>🎽 Comprobantes — Actividades y donaciones</h3><div id="comp-inic-list"><div class="nd"><span class="spin"></span>Cargando...</div></div></div>
   </div>
 
   <!-- EXPORTAR -->
   <div class="sec" id="sec-exportar">
-    <div class="card">
-      <h3>📥 Exportar informe completo</h3>
+    <div class="card"><h3>📥 Exportar informe completo</h3>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px">
         <div style="background:var(--abl);border-radius:10px;padding:11px;text-align:center"><div style="font-size:20px;margin-bottom:3px">💰</div><div style="font-family:'Fredoka One',sans-serif;font-size:1.1rem;color:var(--tl)" id="ex-ing">$0</div><div style="font-size:.65rem;color:var(--ts);font-weight:700">Cuotas</div></div>
         <div style="background:var(--pul);border-radius:10px;padding:11px;text-align:center"><div style="font-size:20px;margin-bottom:3px">🎽</div><div style="font-family:'Fredoka One',sans-serif;font-size:1.1rem;color:var(--pu)" id="ex-inic">$0</div><div style="font-size:.65rem;color:var(--ts);font-weight:700">Actividades</div></div>
@@ -406,8 +434,7 @@ input:checked+.slider:before{transform:translateX(18px)}
     <div class="card"><h3>📊 Estado cuotas por alumno</h3><div class="tw" id="prev-tbl"><div class="nd"><span class="spin"></span>Cargando...</div></div></div>
     <div class="card"><h3>🎽 Estado actividades por alumno</h3><div id="prev-inic"><div class="nd">Cargando...</div></div></div>
   </div>
-
-</div><!-- /con -->
+</div>
 
 <div style="background:var(--ab);color:rgba(255,255,255,.4);text-align:center;padding:12px;font-size:.69rem;margin-top:18px">
   🦩 Kinder Flamingo · The Antofagasta British School 2026 · Datos guardados en Supabase
@@ -416,32 +443,32 @@ input:checked+.slider:before{transform:translateX(18px)}
 <script>
 const SB_URL='https://wodluyyhjfzwiptidntr.supabase.co';
 const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndvZGx1eXloamZ6d2lwdGlkbnRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYzMDY2NjcsImV4cCI6MjA5MTg4MjY2N30.FI7qxY-wKQrgeaMMNjY37amvBlicTBtpZOH2krGfsm0';
-const TSOR_USER='tesorero', TSOR_PASS='flamingo2026abs';
+const TSOR_USER='tesorero',TSOR_PASS='flamingo2026abs';
 const sb=supabase.createClient(SB_URL,SB_KEY);
 const MESES=['Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 const CUOTA=12000;
 const COLS=['#072957','#2bb5a0','#e85d8a','#c49b0a','#7c4daa','#3a86c8','#e67e22','#16a085','#8e44ad','#c0392b','#2980b9','#1abc9c'];
 
 let alumnos=[],pagos=[],egresos=[],iniciativas=[],pagosInic=[],isTesorero=false;
-let pendFile=null, pendFile2=null, curIniciativaId=null;
+let pendFile1=null,pendFile2=null,curIniciativaId=null;
 
 document.getElementById('logo-abs').src='data:image/png;base64,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';
 
-// ── AUTH ─────────────────────────────────────
+// ── AUTH ──────────────────────────────────────────────────────
 function showLogin(){document.getElementById('login-modal').classList.remove('hid')}
 function closeLogin(){document.getElementById('login-modal').classList.add('hid')}
 function doLogin(){
-  const u=document.getElementById('lu').value.trim(),p=document.getElementById('lp').value.trim();
-  if(u===TSOR_USER&&p===TSOR_PASS){
+  if(document.getElementById('lu').value.trim()===TSOR_USER&&document.getElementById('lp').value.trim()===TSOR_PASS){
     isTesorero=true;document.body.classList.add('is-tsor');
     document.getElementById('mode-lbl').textContent='🔐 Modo Tesorero';
     document.getElementById('btn-tsor').style.display='none';
-    closeLogin();renderAlumnos();showAlert('alert-dash','✅ Bienvenido, Tesorero 🦩','as');
-  }else{document.getElementById('lerr').textContent='Usuario o contraseña incorrectos';}
+    closeLogin();renderAlumnos();renderHistorial();renderEgresos();
+    showAlert('alert-dash','✅ Bienvenido, Tesorero 🦩','as');
+  }else document.getElementById('lerr').textContent='Usuario o contraseña incorrectos';
 }
 function doLogout(){isTesorero=false;document.body.classList.remove('is-tsor');document.getElementById('mode-lbl').textContent='👁️ Vista Apoderado';document.getElementById('btn-tsor').style.display='';showTab('dashboard');}
 
-// ── LOAD ─────────────────────────────────────
+// ── LOAD ──────────────────────────────────────────────────────
 async function loadAll(){
   const[ra,rp,re,ri,rpi]=await Promise.all([
     sb.from('alumnos').select('*').order('ap1'),
@@ -450,20 +477,25 @@ async function loadAll(){
     sb.from('iniciativas').select('*').order('created_at'),
     sb.from('pagos_iniciativas').select('*').order('created_at',{ascending:false})
   ]);
-  alumnos=ra.data||[];pagos=rp.data||[];egresos=re.data||[];
-  iniciativas=ri.data||[];pagosInic=rpi.data||[];
+  alumnos=ra.data||[];pagos=rp.data||[];egresos=re.data||[];iniciativas=ri.data||[];pagosInic=rpi.data||[];
   renderAll();
 }
 
-// ── HELPERS ───────────────────────────────────
+// ── HELPERS ───────────────────────────────────────────────────
 const norm=s=>(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').trim();
-const av=(name,i)=>{const p=name.trim().split(' ');const ini=(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase();return`<div class="av" style="background:${COLS[i%COLS.length]}">${ini}</div>`;};
+const av=(n,i)=>{const p=n.trim().split(' ');return`<div class="av" style="background:${COLS[i%COLS.length]}">${(p[0][0]+(p[1]?p[1][0]:'')).toUpperCase()}</div>`;};
 const clp=n=>'$'+Math.round(n||0).toLocaleString('es-CL');
 const hoy=id=>{const e=document.getElementById(id);if(e&&!e.value)e.value=new Date().toISOString().split('T')[0];};
 function showAlert(id,msg,cls){const el=document.getElementById(id);if(!el)return;el.innerHTML=`<div class="alert ${cls}">${msg}</div>`;setTimeout(()=>el.innerHTML='',5000);}
 function getEst(id){const m=new Date().getMonth(),t=Math.max(0,m-2),pa=pagos.filter(p=>p.alumno_id===id),tot=pa.reduce((s,p)=>s+(p.monto||0),0);if(tot>=CUOTA*MESES.length)return'completo';if(pa.length>=t&&t>0)return'ok';if(pa.length>0&&t>0)return'parcial';if(t>0)return'atrasado';return'ok';}
+function popSel(selId){const s=document.getElementById(selId);if(!s)return;s.innerHTML='<option value="">— seleccionar —</option>'+alumnos.map(a=>`<option value="${a.id}">${a.ap1} ${a.ap2}, ${a.nombre}</option>`).join('');}
 
-// ── TABS ──────────────────────────────────────
+// ── FILES ─────────────────────────────────────────────────────
+function setFile(f,previewId,slot){if(!f)return;if(slot===1)pendFile1=f;else pendFile2=f;document.getElementById(previewId).textContent='📎 '+f.name+' ('+Math.round(f.size/1024)+'KB)';}
+function doDrop(e){e.preventDefault();document.getElementById('upz').classList.remove('drag');setFile(e.dataTransfer.files[0],'fp',1);}
+async function subirArchivo(file,prefix){if(!file)return'';const ext=file.name.split('.').pop(),fname=`${prefix}_${Date.now()}.${ext}`;const{data,error}=await sb.storage.from('comprobantes').upload(fname,file,{contentType:file.type,upsert:false});if(error)throw error;return data.path;}
+
+// ── TABS ──────────────────────────────────────────────────────
 function showTab(t){
   if(['registrar','egresos','exportar'].includes(t)&&!isTesorero){showLogin();return;}
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
@@ -471,7 +503,7 @@ function showTab(t){
   const i={dashboard:0,alumnos:1,registrar:2,iniciativas:3,egresos:4,comprobantes:5,exportar:6}[t]??0;
   document.querySelectorAll('.ntab')[i].classList.add('active');
   document.getElementById('sec-'+t).classList.add('active');
-  if(t==='registrar'){popSel('p-alu');hoy('p-fec');}
+  if(t==='registrar'){popSel('p-alu');hoy('p-fec');renderHistorial();}
   if(t==='egresos'){renderEgresos();hoy('e-fec');}
   if(t==='comprobantes')renderComp();
   if(t==='exportar')renderExport();
@@ -480,23 +512,17 @@ function showTab(t){
   if(t==='dashboard')renderDash();
 }
 
-// ── FILE HANDLING ─────────────────────────────
-function setFile(f,previewId){if(!f)return;if(previewId==='fp')pendFile=f;else pendFile2=f;document.getElementById(previewId).textContent='📎 '+f.name+' ('+Math.round(f.size/1024)+'KB)';}
-function doDrop(e,inputId,previewId){e.preventDefault();document.getElementById(inputId.replace('fi','upz')).classList.remove('drag');setFile(e.dataTransfer.files[0],previewId);}
-async function subirArchivo(file,carpeta){if(!file)return'';const ext=file.name.split('.').pop();const fname=`${carpeta}_${Date.now()}.${ext}`;const{data,error}=await sb.storage.from('comprobantes').upload(fname,file,{contentType:file.type,upsert:false});if(error)throw error;return data.path;}
-
-// ── VINCULACIÓN EMISOR ────────────────────────
+// ── EMISOR MATCH ──────────────────────────────────────────────
 function matchEmisor(val){
   const mb=document.getElementById('match-box'),mt=document.getElementById('match-txt');
   if(val.length<3){mb.style.display='none';return;}
-  const ep=norm(val).split(/\s+/);
-  let best=null,bestScore=0;
+  const ep=norm(val).split(/\s+/);let best=null,bestScore=0;
   for(const a of alumnos){let s=0;if(norm(a.ap2)&&ep.includes(norm(a.ap2)))s+=2;if(norm(a.mama_a||'')&&ep.includes(norm(a.mama_a||'')))s+=3;if(norm(a.ap1)&&ep.includes(norm(a.ap1)))s+=2;if(norm(a.papa_a||'')&&ep.includes(norm(a.papa_a||'')))s+=3;if(s>bestScore){bestScore=s;best=a;}}
   if(best&&bestScore>0){const esMama=(norm(best.ap2)&&ep.includes(norm(best.ap2)))||(norm(best.mama_a||'')&&ep.includes(norm(best.mama_a||'')));mt.textContent=`Posible: ${best.ap1} ${best.ap2}, ${best.nombre} · ${esMama?'mamá':'papá'} · confianza: ${bestScore>=3?'alta':'media'}`;mb.style.display='flex';document.getElementById('p-alu').value=best.id;}
   else mb.style.display='none';
 }
 
-// ── ALUMNOS ───────────────────────────────────
+// ── ALUMNOS ───────────────────────────────────────────────────
 function toggleFA(){if(!isTesorero)return;const f=document.getElementById('form-alumno');f.style.display=f.style.display==='none'?'block':'none';}
 async function guardarAlumno(){
   if(!isTesorero)return;
@@ -520,13 +546,9 @@ async function editApoderado(id){
   Object.assign(a,{mama_n:mn,mama_a:ma,papa_n:pn,papa_a:pa,cel:cel||a.cel});renderAlumnos();
 }
 function renderAlumnos(){
-  const q=norm(document.getElementById('buscar')?.value||'');
-  const fil=alumnos.filter(a=>norm(`${a.ap1} ${a.ap2} ${a.nombre}`).includes(q));
-  const cont=document.getElementById('alu-list');
+  const q=norm(document.getElementById('buscar')?.value||''),fil=alumnos.filter(a=>norm(`${a.ap1} ${a.ap2} ${a.nombre}`).includes(q)),cont=document.getElementById('alu-list');
   if(!fil.length){cont.innerHTML='<div class="nd">Sin resultados</div>';return;}
-  const rows=fil.map((a,i)=>{
-    const pa=pagos.filter(p=>p.alumno_id===a.id),tot=pa.reduce((s,p)=>s+(p.monto||0),0);
-    const e=getEst(a.id),prog=Math.min(100,Math.round(tot/(CUOTA*MESES.length)*100));
+  const rows=fil.map((a,i)=>{const pa=pagos.filter(p=>p.alumno_id===a.id),tot=pa.reduce((s,p)=>s+(p.monto||0),0),e=getEst(a.id),prog=Math.min(100,Math.round(tot/(CUOTA*MESES.length)*100));
     const eb=e==='completo'?'<span class="badge ok">⭐ Completo</span>':e==='ok'?'<span class="badge ok">✅ Al día</span>':e==='parcial'?'<span class="badge info">⏳ Parcial</span>':'<span class="badge atras">⚠️ Atrasado</span>';
     return`<tr><td style="color:var(--ts);font-size:.68rem">${a.numero||i+1}</td>
       <td style="display:flex;align-items:center;gap:5px">${av(a.nombre,i)}<span>${a.nombre}</span></td>
@@ -537,13 +559,11 @@ function renderAlumnos(){
       <td><div style="font-size:.74rem;font-weight:700">${clp(tot)}</div><div class="pb"><div class="pf" style="width:${prog}%"></div></div></td>
       <td>${eb}</td>
       <td>${isTesorero?`<div style="display:flex;gap:4px"><button class="btn bsm" style="background:var(--abl);color:var(--ab);font-size:.66rem" onclick="editApoderado(${a.id})">✏️</button><button class="btn bsm bt" onclick="showTab('registrar');popSel('p-alu');setTimeout(()=>document.getElementById('p-alu').value=${a.id},50)">+$</button></div>`:''}</td>
-    </tr>`;
-  }).join('');
+    </tr>`;}).join('');
   cont.innerHTML=`<div class="tw"><table><thead><tr><th>#</th><th>Alumno</th><th>Apellidos</th><th>Mamá</th><th>Papá</th><th>Cuotas</th><th>Total</th><th>Estado</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
-// ── CUOTA MENSUAL ─────────────────────────────
-function popSel(selId){const s=document.getElementById(selId);if(!s)return;s.innerHTML='<option value="">— seleccionar —</option>'+alumnos.map(a=>`<option value="${a.id}">${a.ap1} ${a.ap2}, ${a.nombre}</option>`).join('');}
+// ── PAGOS CUOTA ───────────────────────────────────────────────
 function autoMonto(){document.getElementById('p-mon').value=CUOTA;}
 async function guardarPago(){
   if(!isTesorero)return;
@@ -552,169 +572,83 @@ async function guardarPago(){
   const alumno=alumnos.find(a=>a.id===aid),btn=document.getElementById('btn-pago');
   btn.textContent='⏳ Guardando...';btn.disabled=true;
   let compPath='';
-  try{compPath=await subirArchivo(pendFile,`cuota_${aid}_${mes}`);}catch(e){btn.textContent='✅ Registrar cuota';btn.disabled=false;document.getElementById('pago-alert').innerHTML=`<div class="alert ae">❌ Error subiendo archivo: ${e.message}</div>`;return;}
+  try{compPath=await subirArchivo(pendFile1,`cuota_${aid}_${mes}`);}catch(e){btn.textContent='✅ Registrar cuota';btn.disabled=false;document.getElementById('pago-alert').innerHTML=`<div class="alert ae">❌ ${e.message}</div>`;return;}
   const pid=Date.now(),fechaVal=document.getElementById('p-fec').value||null;
   const{error}=await sb.rpc('rpc_insertar_pago',{p_pass:TSOR_PASS,p_id:pid,p_alumno_id:aid,p_alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',p_mes:mes,p_monto:monto,p_fecha:fechaVal,p_operacion:document.getElementById('p-op').value,p_banco:document.getElementById('p-ban').value,p_emisor:document.getElementById('p-emi').value,p_notas:document.getElementById('p-not').value,p_comp_path:compPath});
   btn.textContent='✅ Registrar cuota';btn.disabled=false;
   if(error){document.getElementById('pago-alert').innerHTML=`<div class="alert ae">❌ ${error.message}</div>`;return;}
   pagos.unshift({id:pid,alumno_id:aid,alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',mes,monto,fecha:fechaVal,operacion:document.getElementById('p-op').value,banco:document.getElementById('p-ban').value,emisor:document.getElementById('p-emi').value,notas:document.getElementById('p-not').value,comp_path:compPath});
   ['p-op','p-ban','p-emi','p-not'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('p-mon').value=CUOTA;document.getElementById('fp').textContent='';pendFile=null;document.getElementById('match-box').style.display='none';
-  renderAll();document.getElementById('pago-alert').innerHTML='<div class="alert as">🦩 Cuota guardada en Supabase</div>';setTimeout(()=>document.getElementById('pago-alert').innerHTML='',5000);
+  document.getElementById('p-mon').value=CUOTA;document.getElementById('fp').textContent='';pendFile1=null;document.getElementById('match-box').style.display='none';
+  renderAll();renderHistorial();
+  document.getElementById('pago-alert').innerHTML='<div class="alert as">🦩 Cuota guardada</div>';setTimeout(()=>document.getElementById('pago-alert').innerHTML='',5000);
 }
 
-// ── INICIATIVAS ────────────────────────────────
-function toggleTipoForm(){
-  const t=document.getElementById('i-tipo').value;
-  document.getElementById('f-actividad').style.display=t==='actividad'?'block':'none';
-  document.getElementById('f-donacion').style.display=t==='donacion'?'block':'none';
-}
-async function crearIniciativa(){
-  if(!isTesorero)return;
-  const nom=document.getElementById('i-nom').value.trim();
-  if(!nom){alert('El nombre es requerido');return;}
-  const tipo=document.getElementById('i-tipo').value;
-  const btn=document.getElementById('btn-inic');btn.textContent='⏳ Creando...';btn.disabled=true;
-  const monto=tipo==='actividad'?parseInt(document.getElementById('i-monto').value)||0:0;
-  const fecha=tipo==='actividad'?(document.getElementById('i-fecha').value||null):null;
-  const mostrarMonto=tipo==='actividad'?true:!document.getElementById('i-anon').checked;
-  const id=Date.now();
-  const{error}=await sb.rpc('rpc_crear_iniciativa',{p_pass:TSOR_PASS,p_id:id,p_nombre:nom,p_tipo:tipo,p_descripcion:document.getElementById('i-desc').value.trim(),p_monto_total:monto,p_fecha_limite:fecha,p_mostrar_monto:mostrarMonto});
-  btn.textContent='✨ Crear iniciativa';btn.disabled=false;
-  if(error){alert('Error: '+error.message);return;}
-  iniciativas.push({id,nombre:nom,tipo,descripcion:document.getElementById('i-desc').value.trim(),monto_total:monto,fecha_limite:fecha,mostrar_monto:mostrarMonto,activa:true});
-  ['i-nom','i-desc','i-monto'].forEach(x=>document.getElementById(x).value='');
-  document.getElementById('i-fecha').value='';
-  renderIniciativas();renderDash();
-  showAlert('alert-inic','✅ Iniciativa creada','as');
-}
-async function toggleActiva(id){
-  if(!isTesorero)return;
-  const inic=iniciativas.find(x=>x.id===id);if(!inic)return;
-  const{error}=await sb.rpc('rpc_editar_iniciativa',{p_pass:TSOR_PASS,p_id:id,p_nombre:inic.nombre,p_descripcion:inic.descripcion,p_monto_total:inic.monto_total,p_fecha_limite:inic.fecha_limite,p_mostrar_monto:inic.mostrar_monto,p_activa:!inic.activa});
-  if(error){alert(error.message);return;}
-  inic.activa=!inic.activa;renderIniciativas();
-}
-async function eliminarIniciativa(id){
-  if(!isTesorero||!confirm('¿Eliminar esta iniciativa y todos sus pagos?'))return;
-  const{error}=await sb.rpc('rpc_eliminar_iniciativa',{p_pass:TSOR_PASS,p_id:id});
-  if(error){alert(error.message);return;}
-  iniciativas=iniciativas.filter(x=>x.id!==id);pagosInic=pagosInic.filter(x=>x.iniciativa_id!==id);
-  renderIniciativas();renderDash();
-}
-
-function renderIniciativas(){
-  const cont=document.getElementById('inic-list');
-  if(!iniciativas.length){cont.innerHTML='<div class="nd">No hay actividades creadas aún 🦩</div>';return;}
-  cont.innerHTML=iniciativas.map(inic=>{
-    const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id);
-    const alumnosPagaron=new Set(pags.map(p=>p.alumno_id));
-    const totalRec=pags.reduce((s,p)=>s+(p.mostrar_monto?(p.monto||0):0),0);
-    const porcentaje=alumnos.length?Math.round(alumnosPagaron.size/alumnos.length*100):0;
-    const esAct=inic.tipo==='actividad';
-    const vencido=esAct&&inic.fecha_limite&&new Date(inic.fecha_limite)<new Date();
-
-    // Badges
-    let badges=`<span class="tipo-tag ${esAct?'tipo-act':'tipo-don'}">${esAct?'🎽 Actividad':'❤️ Donación'}</span>`;
-    if(!inic.activa)badges+=`<span class="badge" style="background:#f0f0f0;color:#888">Cerrada</span>`;
-    if(vencido&&inic.activa)badges+=`<span class="badge atras">⚠️ Vencida</span>`;
-    if(!inic.mostrar_monto)badges+=`<span class="anon-tag">🔒 Montos ocultos</span>`;
-
-    // Grilla de alumnos
-    const aluGrid=alumnos.map((a,i)=>{
-      const pagosAlu=pags.filter(p=>p.alumno_id===a.id);
-      const pagado=pagosAlu.length>0;
-      const montoAlu=pagosAlu.reduce((s,p)=>s+(p.monto||0),0);
-      const mostrarM=inic.mostrar_monto||isTesorero;
-      return`<div class="alu-row ${pagado?'pagado':''}">
-        ${av(a.nombre,i)}
-        <div style="flex:1;min-width:0">
-          <div style="font-size:.72rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nombre}</div>
-          <div style="font-size:.67rem;color:${pagado?'#0d6b5e':'var(--ts)'}">
-            ${pagado?(mostrarM&&montoAlu>0?clp(montoAlu):'✅ Registrado'):'Pendiente'}
-          </div>
-        </div>
-        ${isTesorero&&!pagado?`<button class="btn bsm bp" style="font-size:.62rem;padding:2px 7px" onclick="openModalPago(${inic.id},${a.id})">+</button>`:''}
-        ${isTesorero&&pagado?`<button class="btn bsm" style="font-size:.62rem;padding:2px 7px;background:#fde8e8;color:#b52b2b" onclick="delPagoInic(${pagosAlu[0].id})">✕</button>`:''}
-      </div>`;
-    }).join('');
-
-    return`<div class="icard">
-      <div class="icard-hdr">
-        <div class="icard-icon ${esAct?'act':'don'}">${esAct?'🎽':'❤️'}</div>
-        <div class="icard-meta">
-          <h4>${inic.nombre}</h4>
-          <p>${inic.descripcion||''}${esAct&&inic.monto_total?' · '+clp(inic.monto_total)+'/alumno':''}${esAct&&inic.fecha_limite?' · Límite: '+inic.fecha_limite:''}</p>
-          <div class="icard-badges" style="margin-top:4px">${badges}</div>
-        </div>
-        ${isTesorero?`<div style="display:flex;gap:5px;flex-shrink:0">
-          <button class="btn bsm" style="background:${inic.activa?'#fff0cc':'#d4f5ef'};color:${inic.activa?'#8a6600':'#0d6b5e'}" onclick="toggleActiva(${inic.id})">${inic.activa?'Cerrar':'Abrir'}</button>
-          <button class="btn bsm" style="background:#fde8e8;color:#b52b2b" onclick="eliminarIniciativa(${inic.id})">🗑️</button>
-        </div>`:''}
-      </div>
-      <div class="prog-wrap">
-        <div class="prog-lbl"><span>${alumnosPagaron.size}/${alumnos.length} alumnos</span><span>${inic.mostrar_monto||isTesorero?clp(totalRec):porcentaje+'% participaron'}</span></div>
-        <div class="pb"><div class="pf-pk" style="width:${porcentaje}%"></div></div>
-      </div>
-      <div class="alumnos-grid">${aluGrid}</div>
-    </div>`;
+// ── HISTORIAL + EDITAR PAGO ───────────────────────────────────
+function renderHistorial(){
+  const tb=document.getElementById('hist-tbody');
+  if(!pagos.length){tb.innerHTML='<tr><td colspan="9" class="nd">Sin pagos registrados</td></tr>';return;}
+  tb.innerHTML=pagos.map(p=>{
+    const a=alumnos.find(x=>x.id===p.alumno_id);
+    return`<tr id="row-p-${p.id}">
+      <td><strong>${a?a.ap1+' '+a.nombre:p.alumno_nombre}</strong></td>
+      <td>${p.mes}</td><td>${clp(p.monto)}</td>
+      <td style="font-size:.69rem">${p.fecha||'—'}</td>
+      <td style="font-size:.69rem">${p.emisor||'—'}</td>
+      <td style="font-size:.69rem">${p.operacion||'—'}</td>
+      <td style="font-size:.69rem">${p.banco||'—'}</td>
+      <td style="font-size:.69rem;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.notas||'—'}</td>
+      <td>${isTesorero?`<div style="display:flex;gap:3px">
+        <button class="btn bsm byellow" onclick="openEditPago(${p.id})" title="Editar">✏️</button>
+        <button class="del" onclick="delPago(${p.id})" title="Eliminar">✕</button>
+      </div>`:''}</td>
+    </tr>`;
   }).join('');
 }
 
-// Modal pago iniciativa
-function openModalPago(inicId,aluId){
+function openEditPago(id){
   if(!isTesorero)return;
-  curIniciativaId=inicId;
-  const inic=iniciativas.find(x=>x.id===inicId);
-  document.getElementById('mpag-titulo').textContent='Registrar: '+inic.nombre;
-  document.getElementById('mpag-subtit').textContent=inic.tipo==='actividad'?`Actividad · ${clp(inic.monto_total)} por alumno`:'Donación';
-  // Monto
-  const montoWrap=document.getElementById('mp-monto-wrap');
-  if(inic.tipo==='actividad'){montoWrap.style.display='';document.getElementById('mp-mon').value=inic.monto_total||'';}
-  else montoWrap.style.display='';
-  // Anon toggle
-  const anonWrap=document.getElementById('mp-anon-wrap');
-  anonWrap.style.display=inic.tipo==='donacion'?'flex':'none';
-  document.getElementById('mp-anon').checked=!inic.mostrar_monto;
-  // Preselect alumno
-  popSel('mp-alu');
-  if(aluId)setTimeout(()=>document.getElementById('mp-alu').value=aluId,50);
-  hoy('mp-fec');
-  pendFile2=null;document.getElementById('fp2').textContent='';
-  document.getElementById('mp-not').value='';
-  document.getElementById('mp-op').value='';
-  document.getElementById('mp-emi').value='';
-  document.getElementById('mp-ban').value='';
-  document.getElementById('mp-alert').innerHTML='';
-  document.getElementById('modal-pago-inic').classList.remove('hid');
+  const p=pagos.find(x=>x.id===id);if(!p)return;
+  document.getElementById('ep-id').value=id;
+  popSel('ep-alu');document.getElementById('ep-alu').value=p.alumno_id;
+  document.getElementById('ep-mes').value=p.mes;
+  document.getElementById('ep-mon').value=p.monto;
+  document.getElementById('ep-fec').value=p.fecha||'';
+  document.getElementById('ep-emi').value=p.emisor||'';
+  document.getElementById('ep-op').value=p.operacion||'';
+  document.getElementById('ep-ban').value=p.banco||'';
+  document.getElementById('ep-not').value=p.notas||'';
+  document.getElementById('ep-alert').innerHTML='';
+  // Highlight row
+  document.querySelectorAll('.editing-row').forEach(r=>r.classList.remove('editing-row'));
+  const row=document.getElementById('row-p-'+id);if(row)row.classList.add('editing-row');
+  document.getElementById('modal-edit-pago').classList.remove('hid');
 }
-function closeModalPago(){document.getElementById('modal-pago-inic').classList.add('hid');}
-async function guardarPagoIniciativa(){
-  if(!isTesorero)return;
-  const aid=parseInt(document.getElementById('mp-alu').value);
-  if(!aid||!curIniciativaId){document.getElementById('mp-alert').innerHTML='<div class="alert aw">⚠️ Selecciona alumno</div>';return;}
-  const btn=document.getElementById('btn-mp');btn.textContent='⏳ Guardando...';btn.disabled=true;
+function closeModalEditPago(){document.getElementById('modal-edit-pago').classList.add('hid');document.querySelectorAll('.editing-row').forEach(r=>r.classList.remove('editing-row'));}
+async function guardarEditPago(){
+  const id=parseInt(document.getElementById('ep-id').value);
+  const aid=parseInt(document.getElementById('ep-alu').value);
+  const mes=document.getElementById('ep-mes').value;
+  const monto=parseInt(document.getElementById('ep-mon').value)||CUOTA;
+  if(!aid||!mes){document.getElementById('ep-alert').innerHTML='<div class="alert aw">⚠️ Completa alumno y mes</div>';return;}
   const alumno=alumnos.find(a=>a.id===aid);
-  const monto=parseInt(document.getElementById('mp-mon').value)||null;
-  const mostrarMonto=!document.getElementById('mp-anon').checked;
-  let compPath='';
-  try{compPath=await subirArchivo(pendFile2,`inic_${curIniciativaId}_${aid}`);}catch(e){btn.textContent='✅ Registrar pago';btn.disabled=false;document.getElementById('mp-alert').innerHTML=`<div class="alert ae">❌ ${e.message}</div>`;return;}
-  const pid=Date.now();
-  const{error}=await sb.rpc('rpc_pago_iniciativa',{p_pass:TSOR_PASS,p_id:pid,p_iniciativa_id:curIniciativaId,p_alumno_id:aid,p_alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',p_monto:monto,p_fecha:document.getElementById('mp-fec').value||null,p_emisor:document.getElementById('mp-emi').value,p_operacion:document.getElementById('mp-op').value,p_banco:document.getElementById('mp-ban').value,p_notas:document.getElementById('mp-not').value,p_comp_path:compPath,p_mostrar_monto:mostrarMonto});
-  btn.textContent='✅ Registrar pago';btn.disabled=false;
-  if(error){document.getElementById('mp-alert').innerHTML=`<div class="alert ae">❌ ${error.message}</div>`;return;}
-  pagosInic.unshift({id:pid,iniciativa_id:curIniciativaId,alumno_id:aid,alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',monto,mostrar_monto:mostrarMonto,fecha:document.getElementById('mp-fec').value,emisor:document.getElementById('mp-emi').value,operacion:document.getElementById('mp-op').value,banco:document.getElementById('mp-ban').value,notas:document.getElementById('mp-not').value,comp_path:compPath});
-  closeModalPago();renderIniciativas();renderDash();
-  showAlert('alert-inic','✅ Pago registrado en Supabase','as');
+  const btn=document.getElementById('btn-ep');btn.textContent='⏳ Guardando...';btn.disabled=true;
+  const{error}=await sb.rpc('rpc_editar_pago',{p_pass:TSOR_PASS,p_id:id,p_alumno_id:aid,p_alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',p_mes:mes,p_monto:monto,p_fecha:document.getElementById('ep-fec').value||null,p_operacion:document.getElementById('ep-op').value,p_banco:document.getElementById('ep-ban').value,p_emisor:document.getElementById('ep-emi').value,p_notas:document.getElementById('ep-not').value});
+  btn.textContent='💾 Guardar cambios';btn.disabled=false;
+  if(error){document.getElementById('ep-alert').innerHTML=`<div class="alert ae">❌ ${error.message}</div>`;return;}
+  const idx=pagos.findIndex(x=>x.id===id);
+  if(idx>=0)Object.assign(pagos[idx],{alumno_id:aid,alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',mes,monto,fecha:document.getElementById('ep-fec').value||null,operacion:document.getElementById('ep-op').value,banco:document.getElementById('ep-ban').value,emisor:document.getElementById('ep-emi').value,notas:document.getElementById('ep-not').value});
+  closeModalEditPago();renderHistorial();renderDash();renderAlumnos();renderExport();
+  showAlert('alert-dash','✅ Pago actualizado correctamente','as');
 }
-async function delPagoInic(id){
-  if(!isTesorero||!confirm('¿Eliminar este pago?'))return;
-  const{error}=await sb.rpc('rpc_eliminar_pago_iniciativa',{p_pass:TSOR_PASS,p_id:id});
+async function delPago(id){
+  if(!isTesorero||!confirm('¿Eliminar este pago? Esta acción no se puede deshacer.'))return;
+  const{error}=await sb.rpc('rpc_eliminar_pago',{p_pass:TSOR_PASS,p_id:id});
   if(error){alert(error.message);return;}
-  pagosInic=pagosInic.filter(x=>x.id!==id);renderIniciativas();renderDash();
+  pagos=pagos.filter(x=>x.id!==id);renderHistorial();renderDash();renderAlumnos();renderExport();
 }
 
-// ── EGRESOS ───────────────────────────────────
+// ── EGRESOS + EDITAR ──────────────────────────────────────────
 async function guardarEgreso(){
   if(!isTesorero)return;
   const act=document.getElementById('e-act').value.trim(),monto=parseInt(document.getElementById('e-mon').value);
@@ -728,147 +662,241 @@ async function guardarEgreso(){
   ['e-act','e-des','e-mon'].forEach(id=>document.getElementById(id).value='');
   renderEgresos();renderDash();renderExport();
 }
-async function delEgreso(id){if(!isTesorero||!confirm('¿Eliminar?'))return;const{error}=await sb.rpc('rpc_eliminar_egreso',{p_pass:TSOR_PASS,p_id:id});if(error){alert(error.message);return;}egresos=egresos.filter(e=>e.id!==id);renderEgresos();renderDash();renderExport();}
+function openEditEgreso(id){
+  if(!isTesorero)return;
+  const e=egresos.find(x=>x.id===id);if(!e)return;
+  document.getElementById('ee-id').value=id;
+  document.getElementById('ee-act').value=e.actividad;
+  document.getElementById('ee-des').value=e.descripcion||'';
+  document.getElementById('ee-mon').value=e.monto;
+  document.getElementById('ee-fec').value=e.fecha||'';
+  document.getElementById('ee-cat').value=e.categoria||'🎉 Celebración';
+  document.getElementById('ee-alert').innerHTML='';
+  document.getElementById('modal-edit-egreso').classList.remove('hid');
+}
+function closeModalEditEgreso(){document.getElementById('modal-edit-egreso').classList.add('hid');}
+async function guardarEditEgreso(){
+  const id=parseInt(document.getElementById('ee-id').value);
+  const act=document.getElementById('ee-act').value.trim(),monto=parseInt(document.getElementById('ee-mon').value);
+  if(!act||!monto){document.getElementById('ee-alert').innerHTML='<div class="alert aw">⚠️ Actividad y monto requeridos</div>';return;}
+  const btn=document.getElementById('btn-ee');btn.textContent='⏳ Guardando...';btn.disabled=true;
+  const{error}=await sb.rpc('rpc_editar_egreso',{p_pass:TSOR_PASS,p_id:id,p_actividad:act,p_descripcion:document.getElementById('ee-des').value.trim(),p_categoria:document.getElementById('ee-cat').value,p_fecha:document.getElementById('ee-fec').value||null,p_monto:monto});
+  btn.textContent='💾 Guardar cambios';btn.disabled=false;
+  if(error){document.getElementById('ee-alert').innerHTML=`<div class="alert ae">❌ ${error.message}</div>`;return;}
+  const idx=egresos.findIndex(x=>x.id===id);
+  if(idx>=0)Object.assign(egresos[idx],{actividad:act,descripcion:document.getElementById('ee-des').value.trim(),categoria:document.getElementById('ee-cat').value,fecha:document.getElementById('ee-fec').value||null,monto});
+  closeModalEditEgreso();renderEgresos();renderDash();renderExport();
+}
+async function delEgreso(id){if(!isTesorero||!confirm('¿Eliminar este egreso?'))return;const{error}=await sb.rpc('rpc_eliminar_egreso',{p_pass:TSOR_PASS,p_id:id});if(error){alert(error.message);return;}egresos=egresos.filter(e=>e.id!==id);renderEgresos();renderDash();renderExport();}
 function renderEgresos(){
   const tb=document.getElementById('egr-tbody'),tot=egresos.reduce((s,e)=>s+(e.monto||0),0);
   document.getElementById('tot-egr').textContent=clp(tot);
   if(!egresos.length){tb.innerHTML='<tr><td colspan="7" class="nd">Sin egresos 🦩</td></tr>';return;}
-  tb.innerHTML=egresos.map((e,i)=>`<tr><td style="font-size:.68rem;color:var(--ts)">${i+1}</td><td><strong>${e.actividad}</strong></td><td style="font-size:.75rem">${e.descripcion||'—'}</td><td><span class="badge info" style="font-size:.64rem">${e.categoria}</span></td><td style="font-size:.68rem;color:var(--ts)">${e.fecha||'—'}</td><td><strong>${clp(e.monto)}</strong></td><td>${isTesorero?`<button class="del" onclick="delEgreso(${e.id})">✕</button>`:''}</td></tr>`).join('');
+  tb.innerHTML=egresos.map((e,i)=>`<tr>
+    <td style="font-size:.68rem;color:var(--ts)">${i+1}</td>
+    <td><strong>${e.actividad}</strong></td>
+    <td style="font-size:.75rem">${e.descripcion||'—'}</td>
+    <td><span class="badge info" style="font-size:.64rem">${e.categoria}</span></td>
+    <td style="font-size:.68rem;color:var(--ts)">${e.fecha||'—'}</td>
+    <td><strong>${clp(e.monto)}</strong></td>
+    <td>${isTesorero?`<div style="display:flex;gap:3px"><button class="btn bsm byellow" onclick="openEditEgreso(${e.id})">✏️</button><button class="del" onclick="delEgreso(${e.id})">✕</button></div>`:''}</td>
+  </tr>`).join('');
 }
 
-// ── COMPROBANTES ──────────────────────────────
-async function renderComp(){
-  // Cuotas
-  const d1=document.getElementById('comp-list');
-  const pc=pagos.filter(p=>p.comp_path);
-  if(!pc.length){d1.innerHTML='<div class="nd">Sin comprobantes</div>';}
-  else{d1.innerHTML=await buildCompHTML(pc,p=>{const a=alumnos.find(x=>x.id===p.alumno_id);return(a?`${a.ap1} ${a.nombre}`:p.alumno_nombre)+' · '+p.mes;});}
-  // Iniciativas
-  const d2=document.getElementById('comp-inic-list');
-  const pi=pagosInic.filter(p=>p.comp_path);
-  if(!pi.length){d2.innerHTML='<div class="nd">Sin comprobantes</div>';}
-  else{d2.innerHTML=await buildCompHTML(pi,p=>{const a=alumnos.find(x=>x.id===p.alumno_id);const inic=iniciativas.find(x=>x.id===p.iniciativa_id);return(a?`${a.ap1} ${a.nombre}`:p.alumno_nombre)+' · '+(inic?inic.nombre:'?');});}
+// ── INICIATIVAS ───────────────────────────────────────────────
+function toggleTipoForm(){const t=document.getElementById('i-tipo').value;document.getElementById('f-actividad').style.display=t==='actividad'?'block':'none';document.getElementById('f-donacion').style.display=t==='donacion'?'block':'none';}
+async function crearIniciativa(){
+  if(!isTesorero)return;
+  const nom=document.getElementById('i-nom').value.trim();if(!nom){alert('El nombre es requerido');return;}
+  const tipo=document.getElementById('i-tipo').value,btn=document.getElementById('btn-inic');
+  btn.textContent='⏳ Creando...';btn.disabled=true;
+  const monto=tipo==='actividad'?parseInt(document.getElementById('i-monto').value)||0:0;
+  const fecha=tipo==='actividad'?(document.getElementById('i-fecha').value||null):null;
+  const mostrarMonto=tipo==='actividad'?true:!document.getElementById('i-anon').checked;
+  const id=Date.now();
+  const{error}=await sb.rpc('rpc_crear_iniciativa',{p_pass:TSOR_PASS,p_id:id,p_nombre:nom,p_tipo:tipo,p_descripcion:document.getElementById('i-desc').value.trim(),p_monto_total:monto,p_fecha_limite:fecha,p_mostrar_monto:mostrarMonto});
+  btn.textContent='✨ Crear iniciativa';btn.disabled=false;
+  if(error){alert('Error: '+error.message);return;}
+  iniciativas.push({id,nombre:nom,tipo,descripcion:document.getElementById('i-desc').value.trim(),monto_total:monto,fecha_limite:fecha,mostrar_monto:mostrarMonto,activa:true});
+  ['i-nom','i-desc','i-monto'].forEach(x=>document.getElementById(x).value='');document.getElementById('i-fecha').value='';
+  renderIniciativas();renderDash();showAlert('alert-inic','✅ Iniciativa creada','as');
 }
-async function buildCompHTML(list,labelFn){
-  let html='';
-  for(const p of list){
-    const isImg=/\.(jpg|jpeg|png|webp)$/i.test(p.comp_path);
-    const{data:ud}=sb.storage.from('comprobantes').getPublicUrl(p.comp_path);
-    const url=ud?.publicUrl||'#';const lbl=labelFn(p);
-    html+=`<div style="display:flex;align-items:center;gap:9px;padding:9px 11px;border-bottom:1px solid var(--abll)">
-      <div style="width:32px;height:32px;border-radius:8px;background:var(--abl);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${isImg?'🖼️':'📄'}</div>
-      <div style="flex:1"><strong style="font-size:.79rem">${lbl}</strong><br><span style="font-size:.68rem;color:var(--ts)">${p.fecha||'—'} · ${p.emisor||'—'}</span></div>
-      ${isImg?`<a href="${url}" target="_blank"><img src="${url}" style="width:40px;height:40px;object-fit:cover;border-radius:7px;border:1px solid var(--bd)"></a>`:`<a href="${url}" target="_blank" style="font-size:.69rem;color:var(--tl);font-weight:700">⬇️ Abrir</a>`}
-    </div>`;
-  }return html;
-}
-
-// ── DASHBOARD ─────────────────────────────────
-function renderDash(){
-  let ok=0,par=0,atr=0;
-  alumnos.forEach(a=>{const e=getEst(a.id);if(e==='ok'||e==='completo')ok++;else if(e==='parcial')par++;else atr++;});
-  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0);
-  const egr=egresos.reduce((s,e)=>s+(e.monto||0),0);
-  const inicAct=iniciativas.filter(x=>x.activa).length;
-  document.getElementById('s-tot').textContent=alumnos.length;
-  document.getElementById('s-ok').textContent=ok;
-  document.getElementById('s-par').textContent=par;
-  document.getElementById('s-atr').textContent=atr;
-  document.getElementById('s-ing').textContent='$'+Math.round(ing/1000)+'k';
-  document.getElementById('s-egr').textContent='$'+Math.round(egr/1000)+'k';
-  document.getElementById('s-sal').textContent='$'+Math.round((ing-egr)/1000)+'k';
-  document.getElementById('s-inic').textContent=inicAct;
-  const curM=new Date().getMonth();
-  document.getElementById('months-grid').innerHTML=MESES.map((m,i)=>{const ri=i+2,pm=pagos.filter(p=>p.mes===m);let cls='mp';if(pm.length>0)cls+=ri<=curM?' done':' cur';else if(ri===curM)cls+=' cur';return`<div class="${cls}"><span>${m.slice(0,3)}</span><span>${pm.length?pm.length+'p':ri===curM?'actual':'—'}</span></div>`;}).join('');
-  const rec=pagos.slice(0,5);
-  const rtb=document.getElementById('rec-tbody');
-  if(!rec.length){rtb.innerHTML='<tr><td colspan="7" class="nd">Sin pagos aún 🦩</td></tr>';return;}
-  rtb.innerHTML=rec.map(p=>{const a=alumnos.find(x=>x.id===p.alumno_id);return`<tr><td>${a?a.ap1+' '+a.nombre:p.alumno_nombre}</td><td style="font-size:.7rem">${p.emisor||'—'}</td><td><strong>${clp(p.monto)}</strong></td><td>${p.mes}</td><td style="font-size:.69rem;color:var(--ts)">${p.fecha||'—'}</td><td style="font-size:.69rem;color:var(--ts)">${p.operacion||'—'}</td><td><span class="badge ok">✅</span></td></tr>`;}).join('');
-  // Iniciativas en dashboard
-  const di=document.getElementById('dash-iniciativas');
-  const iAct=iniciativas.filter(x=>x.activa);
-  if(!iAct.length){di.innerHTML='<div class="nd">Sin actividades activas</div>';return;}
-  di.innerHTML=iAct.map(inic=>{
-    const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id);
-    const part=new Set(pags.map(p=>p.alumno_id)).size;
-    const tot=pags.reduce((s,p)=>s+(p.mostrar_monto?(p.monto||0):0),0);
-    const pct=alumnos.length?Math.round(part/alumnos.length*100):0;
-    const vence=inic.fecha_limite?` · Límite: ${inic.fecha_limite}`:'';
-    return`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)">
-      <div style="font-size:20px">${inic.tipo==='actividad'?'🎽':'❤️'}</div>
-      <div style="flex:1">
-        <div style="font-size:.82rem;font-weight:700">${inic.nombre}<span style="font-size:.69rem;color:var(--ts);font-weight:400">${vence}</span></div>
-        <div style="font-size:.71rem;color:var(--ts)">${part}/${alumnos.length} alumnos · ${inic.mostrar_monto||isTesorero?clp(tot):pct+'% participaron'}</div>
-        <div class="pb" style="margin-top:3px"><div class="pf-pk" style="width:${pct}%"></div></div>
+async function toggleActiva(id){if(!isTesorero)return;const inic=iniciativas.find(x=>x.id===id);if(!inic)return;const{error}=await sb.rpc('rpc_editar_iniciativa',{p_pass:TSOR_PASS,p_id:id,p_nombre:inic.nombre,p_descripcion:inic.descripcion,p_monto_total:inic.monto_total,p_fecha_limite:inic.fecha_limite,p_mostrar_monto:inic.mostrar_monto,p_activa:!inic.activa});if(error){alert(error.message);return;}inic.activa=!inic.activa;renderIniciativas();}
+async function eliminarIniciativa(id){if(!isTesorero||!confirm('¿Eliminar esta iniciativa y todos sus pagos?'))return;const{error}=await sb.rpc('rpc_eliminar_iniciativa',{p_pass:TSOR_PASS,p_id:id});if(error){alert(error.message);return;}iniciativas=iniciativas.filter(x=>x.id!==id);pagosInic=pagosInic.filter(x=>x.iniciativa_id!==id);renderIniciativas();renderDash();}
+function renderIniciativas(){
+  const cont=document.getElementById('inic-list');
+  if(!iniciativas.length){cont.innerHTML='<div class="nd">No hay actividades creadas aún 🦩</div>';return;}
+  cont.innerHTML=iniciativas.map(inic=>{
+    const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id),alumnosPagaron=new Set(pags.map(p=>p.alumno_id));
+    const totalRec=pags.reduce((s,p)=>s+(p.mostrar_monto?(p.monto||0):0),0),pct=alumnos.length?Math.round(alumnosPagaron.size/alumnos.length*100):0;
+    const esAct=inic.tipo==='actividad',vencido=esAct&&inic.fecha_limite&&new Date(inic.fecha_limite)<new Date();
+    let badges=`<span class="tipo-tag ${esAct?'tipo-act':'tipo-don'}">${esAct?'🎽 Actividad':'❤️ Donación'}</span>`;
+    if(!inic.activa)badges+=`<span class="badge" style="background:#f0f0f0;color:#888">Cerrada</span>`;
+    if(vencido&&inic.activa)badges+=`<span class="badge atras">⚠️ Vencida</span>`;
+    if(!inic.mostrar_monto)badges+=`<span class="anon-tag">🔒 Montos ocultos</span>`;
+    const aluGrid=alumnos.map((a,i)=>{
+      const pagosAlu=pags.filter(p=>p.alumno_id===a.id),pagado=pagosAlu.length>0,montoAlu=pagosAlu.reduce((s,p)=>s+(p.monto||0),0);
+      return`<div class="alu-row ${pagado?'pagado':''}">
+        ${av(a.nombre,i)}
+        <div style="flex:1;min-width:0"><div style="font-size:.71rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${a.nombre}</div>
+        <div style="font-size:.66rem;color:${pagado?'#0d6b5e':'var(--ts)'}">${pagado?((inic.mostrar_monto||isTesorero)&&montoAlu>0?clp(montoAlu):'✅ Registrado'):'Pendiente'}</div></div>
+        ${isTesorero&&!pagado?`<button class="btn bsm bp" style="font-size:.61rem;padding:2px 6px" onclick="openModalPago(${inic.id},${a.id})">+</button>`:''}
+        ${isTesorero&&pagado?`<div style="display:flex;gap:2px">
+          <button class="btn bsm byellow" style="font-size:.61rem;padding:2px 5px" onclick="openEditPinic(${pagosAlu[0].id},${inic.id})">✏️</button>
+          <button class="btn bsm" style="background:#fde8e8;color:#b52b2b;font-size:.61rem;padding:2px 5px" onclick="delPagoInic(${pagosAlu[0].id})">✕</button>
+        </div>`:''}
+      </div>`;
+    }).join('');
+    return`<div class="icard">
+      <div class="icard-hdr">
+        <div class="icard-icon ${esAct?'act':'don'}">${esAct?'🎽':'❤️'}</div>
+        <div class="icard-meta"><h4>${inic.nombre}</h4><p>${inic.descripcion||''}${esAct&&inic.monto_total?' · '+clp(inic.monto_total)+'/alumno':''}${esAct&&inic.fecha_limite?' · Límite: '+inic.fecha_limite:''}</p><div style="display:flex;gap:5px;flex-wrap:wrap;margin-top:4px">${badges}</div></div>
+        ${isTesorero?`<div style="display:flex;gap:5px;flex-shrink:0"><button class="btn bsm" style="background:${inic.activa?'#fff0cc':'#d4f5ef'};color:${inic.activa?'#7a5800':'#0d6b5e'}" onclick="toggleActiva(${inic.id})">${inic.activa?'Cerrar':'Abrir'}</button><button class="btn bsm" style="background:#fde8e8;color:#b52b2b" onclick="eliminarIniciativa(${inic.id})">🗑️</button></div>`:''}
       </div>
-      <button class="btn bsm bp" onclick="showTab('iniciativas')">Ver</button>
+      <div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:.71rem;font-weight:700;margin-bottom:3px"><span>${alumnosPagaron.size}/${alumnos.length} alumnos</span><span>${inic.mostrar_monto||isTesorero?clp(totalRec):pct+'% participaron'}</span></div><div class="pb"><div class="pf-pk" style="width:${pct}%"></div></div></div>
+      <div class="alumnos-grid">${aluGrid}</div>
     </div>`;
   }).join('');
 }
 
-// ── EXPORTAR ──────────────────────────────────
-function renderExport(){
-  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0);
-  const egr=egresos.reduce((s,e)=>s+(e.monto||0),0);
-  const iIngTotal=pagosInic.reduce((s,p)=>s+(p.mostrar_monto?p.monto||0:0),0);
-  document.getElementById('ex-ing').textContent=clp(ing);
-  document.getElementById('ex-inic').textContent=clp(iIngTotal);
-  document.getElementById('ex-egr').textContent=clp(egr);
-  document.getElementById('ex-sal').textContent=clp(ing+iIngTotal-egr);
-  // Preview cuotas
-  const prev=document.getElementById('prev-tbl');
-  prev.innerHTML=`<table><thead><tr><th>#</th><th>Alumno</th><th>Apellidos</th>${MESES.map(m=>`<th>${m.slice(0,3)}</th>`).join('')}<th>Total</th><th>%</th></tr></thead><tbody>${alumnos.map((a,i)=>{const pa=pagos.filter(p=>p.alumno_id===a.id),mP=pa.map(p=>p.mes),tot=pa.reduce((s,p)=>s+(p.monto||0),0),pct=Math.round(tot/(CUOTA*MESES.length)*100);return`<tr><td style="font-size:.68rem;color:var(--ts)">${i+1}</td><td style="font-size:.75rem">${a.nombre}</td><td style="font-size:.72rem"><strong>${a.ap1}</strong> ${a.ap2}</td>${MESES.map(m=>`<td style="text-align:center;font-size:.74rem">${mP.includes(m)?'✅':'—'}</td>`).join('')}<td style="font-size:.74rem"><strong>${clp(tot)}</strong></td><td style="font-size:.72rem;color:${pct>=100?'#0d6b5e':pct>0?'#8a6600':'#b52b2b'}">${pct}%</td></tr>`;}).join('')}</tbody></table>`;
-  // Preview iniciativas
-  const pi=document.getElementById('prev-inic');
-  if(!iniciativas.length){pi.innerHTML='<div class="nd">Sin actividades</div>';return;}
-  pi.innerHTML=`<div class="tw"><table><thead><tr><th>Actividad</th><th>Tipo</th>${alumnos.map(a=>`<th style="min-width:60px;font-size:.62rem">${a.ap1}</th>`).join('')}<th>Participantes</th></tr></thead><tbody>${iniciativas.map(inic=>{const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id);return`<tr><td style="font-size:.74rem"><strong>${inic.nombre}</strong></td><td><span class="badge ${inic.tipo==='actividad'?'info':'pkb'}">${inic.tipo==='actividad'?'🎽':'❤️'}</span></td>${alumnos.map(a=>{const p=pags.find(x=>x.alumno_id===a.id);return`<td style="text-align:center;font-size:.72rem">${p?(inic.mostrar_monto&&p.monto?clp(p.monto):'✅'):'—'}</td>`;}).join('')}<td style="font-size:.74rem">${new Set(pags.map(p=>p.alumno_id)).size}/${alumnos.length}</td></tr>`;}).join('')}</tbody></table></div>`;
+// Modal nuevo pago iniciativa
+function openModalPago(inicId,aluId){
+  if(!isTesorero)return;curIniciativaId=inicId;
+  const inic=iniciativas.find(x=>x.id===inicId);
+  document.getElementById('mpag-titulo').textContent='Registrar: '+inic.nombre;
+  document.getElementById('mpag-subtit').textContent=inic.tipo==='actividad'?`Actividad · ${clp(inic.monto_total)} por alumno`:'Donación';
+  document.getElementById('mp-monto-wrap').style.display='';
+  if(inic.tipo==='actividad')document.getElementById('mp-mon').value=inic.monto_total||'';else document.getElementById('mp-mon').value='';
+  document.getElementById('mp-anon-wrap').style.display=inic.tipo==='donacion'?'flex':'none';
+  document.getElementById('mp-anon').checked=!inic.mostrar_monto;
+  popSel('mp-alu');if(aluId)setTimeout(()=>document.getElementById('mp-alu').value=aluId,50);
+  hoy('mp-fec');pendFile2=null;document.getElementById('fp2').textContent='';
+  ['mp-not','mp-op','mp-emi','mp-ban'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('mp-alert').innerHTML='';
+  document.getElementById('modal-pago-inic').classList.remove('hid');
+}
+function closeModalPago(){document.getElementById('modal-pago-inic').classList.add('hid');}
+async function guardarPagoIniciativa(){
+  if(!isTesorero)return;
+  const aid=parseInt(document.getElementById('mp-alu').value);
+  if(!aid||!curIniciativaId){document.getElementById('mp-alert').innerHTML='<div class="alert aw">⚠️ Selecciona alumno</div>';return;}
+  const btn=document.getElementById('btn-mp');btn.textContent='⏳ Guardando...';btn.disabled=true;
+  const alumno=alumnos.find(a=>a.id===aid),monto=parseInt(document.getElementById('mp-mon').value)||null,mostrarMonto=!document.getElementById('mp-anon').checked;
+  let compPath='';
+  try{compPath=await subirArchivo(pendFile2,`inic_${curIniciativaId}_${aid}`);}catch(e){btn.textContent='✅ Registrar pago';btn.disabled=false;document.getElementById('mp-alert').innerHTML=`<div class="alert ae">❌ ${e.message}</div>`;return;}
+  const pid=Date.now();
+  const{error}=await sb.rpc('rpc_pago_iniciativa',{p_pass:TSOR_PASS,p_id:pid,p_iniciativa_id:curIniciativaId,p_alumno_id:aid,p_alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',p_monto:monto,p_fecha:document.getElementById('mp-fec').value||null,p_emisor:document.getElementById('mp-emi').value,p_operacion:document.getElementById('mp-op').value,p_banco:document.getElementById('mp-ban').value,p_notas:document.getElementById('mp-not').value,p_comp_path:compPath,p_mostrar_monto:mostrarMonto});
+  btn.textContent='✅ Registrar pago';btn.disabled=false;
+  if(error){document.getElementById('mp-alert').innerHTML=`<div class="alert ae">❌ ${error.message}</div>`;return;}
+  pagosInic.unshift({id:pid,iniciativa_id:curIniciativaId,alumno_id:aid,alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',monto,mostrar_monto:mostrarMonto,fecha:document.getElementById('mp-fec').value,emisor:document.getElementById('mp-emi').value,operacion:document.getElementById('mp-op').value,banco:document.getElementById('mp-ban').value,notas:document.getElementById('mp-not').value,comp_path:compPath});
+  closeModalPago();renderIniciativas();renderDash();showAlert('alert-inic','✅ Pago registrado','as');
 }
 
+// Editar pago iniciativa
+function openEditPinic(pid,inicId){
+  if(!isTesorero)return;
+  const p=pagosInic.find(x=>x.id===pid);if(!p)return;
+  const inic=iniciativas.find(x=>x.id===inicId);
+  document.getElementById('epi-id').value=pid;
+  document.getElementById('epi-subtit').textContent=inic?inic.nombre:'';
+  popSel('epi-alu');document.getElementById('epi-alu').value=p.alumno_id;
+  document.getElementById('epi-mon').value=p.monto||'';
+  document.getElementById('epi-fec').value=p.fecha||'';
+  document.getElementById('epi-op').value=p.operacion||'';
+  document.getElementById('epi-emi').value=p.emisor||'';
+  document.getElementById('epi-ban').value=p.banco||'';
+  document.getElementById('epi-not').value=p.notas||'';
+  document.getElementById('epi-anon').checked=!p.mostrar_monto;
+  const esDon=inic&&inic.tipo==='donacion';
+  document.getElementById('epi-anon-wrap').style.display=esDon?'flex':'none';
+  document.getElementById('epi-alert').innerHTML='';
+  document.getElementById('modal-edit-pinic').classList.remove('hid');
+}
+function closeModalEditPinic(){document.getElementById('modal-edit-pinic').classList.add('hid');}
+async function guardarEditPinic(){
+  const id=parseInt(document.getElementById('epi-id').value);
+  const aid=parseInt(document.getElementById('epi-alu').value);
+  if(!aid){document.getElementById('epi-alert').innerHTML='<div class="alert aw">⚠️ Selecciona alumno</div>';return;}
+  const alumno=alumnos.find(a=>a.id===aid),btn=document.getElementById('btn-epi');
+  btn.textContent='⏳ Guardando...';btn.disabled=true;
+  const{error}=await sb.rpc('rpc_editar_pago_iniciativa',{p_pass:TSOR_PASS,p_id:id,p_alumno_id:aid,p_alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',p_monto:parseInt(document.getElementById('epi-mon').value)||null,p_fecha:document.getElementById('epi-fec').value||null,p_operacion:document.getElementById('epi-op').value,p_banco:document.getElementById('epi-ban').value,p_emisor:document.getElementById('epi-emi').value,p_notas:document.getElementById('epi-not').value,p_mostrar_monto:!document.getElementById('epi-anon').checked});
+  btn.textContent='💾 Guardar cambios';btn.disabled=false;
+  if(error){document.getElementById('epi-alert').innerHTML=`<div class="alert ae">❌ ${error.message}</div>`;return;}
+  const idx=pagosInic.findIndex(x=>x.id===id);
+  if(idx>=0)Object.assign(pagosInic[idx],{alumno_id:aid,alumno_nombre:alumno?`${alumno.ap1} ${alumno.nombre}`:'',monto:parseInt(document.getElementById('epi-mon').value)||null,fecha:document.getElementById('epi-fec').value||null,operacion:document.getElementById('epi-op').value,banco:document.getElementById('epi-ban').value,emisor:document.getElementById('epi-emi').value,notas:document.getElementById('epi-not').value,mostrar_monto:!document.getElementById('epi-anon').checked});
+  closeModalEditPinic();renderIniciativas();renderDash();showAlert('alert-inic','✅ Pago actualizado','as');
+}
+async function delPagoInic(id){if(!isTesorero||!confirm('¿Eliminar este pago?'))return;const{error}=await sb.rpc('rpc_eliminar_pago_iniciativa',{p_pass:TSOR_PASS,p_id:id});if(error){alert(error.message);return;}pagosInic=pagosInic.filter(x=>x.id!==id);renderIniciativas();renderDash();}
+
+// ── COMPROBANTES ──────────────────────────────────────────────
+async function renderComp(){
+  const d1=document.getElementById('comp-list'),pc=pagos.filter(p=>p.comp_path);
+  d1.innerHTML=!pc.length?'<div class="nd">Sin comprobantes</div>':await buildCompHTML(pc,p=>{const a=alumnos.find(x=>x.id===p.alumno_id);return(a?`${a.ap1} ${a.nombre}`:p.alumno_nombre)+' · '+p.mes;});
+  const d2=document.getElementById('comp-inic-list'),pi=pagosInic.filter(p=>p.comp_path);
+  d2.innerHTML=!pi.length?'<div class="nd">Sin comprobantes</div>':await buildCompHTML(pi,p=>{const a=alumnos.find(x=>x.id===p.alumno_id);const inic=iniciativas.find(x=>x.id===p.iniciativa_id);return(a?`${a.ap1} ${a.nombre}`:p.alumno_nombre)+' · '+(inic?inic.nombre:'?');});
+}
+async function buildCompHTML(list,labelFn){
+  let html='';
+  for(const p of list){const isImg=/\.(jpg|jpeg|png|webp)$/i.test(p.comp_path);const{data:ud}=sb.storage.from('comprobantes').getPublicUrl(p.comp_path);const url=ud?.publicUrl||'#';
+    html+=`<div style="display:flex;align-items:center;gap:9px;padding:9px 11px;border-bottom:1px solid var(--abll)"><div style="width:32px;height:32px;border-radius:8px;background:var(--abl);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${isImg?'🖼️':'📄'}</div><div style="flex:1"><strong style="font-size:.78rem">${labelFn(p)}</strong><br><span style="font-size:.68rem;color:var(--ts)">${p.fecha||'—'} · ${p.emisor||'—'}</span></div>${isImg?`<a href="${url}" target="_blank"><img src="${url}" style="width:40px;height:40px;object-fit:cover;border-radius:7px;border:1px solid var(--bd)"></a>`:`<a href="${url}" target="_blank" style="font-size:.69rem;color:var(--tl);font-weight:700">⬇️ Abrir</a>`}</div>`;
+  }return html;
+}
+
+// ── DASHBOARD ─────────────────────────────────────────────────
+function renderDash(){
+  let ok=0,par=0,atr=0;alumnos.forEach(a=>{const e=getEst(a.id);if(e==='ok'||e==='completo')ok++;else if(e==='parcial')par++;else atr++;});
+  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0),egr=egresos.reduce((s,e)=>s+(e.monto||0),0),inicAct=iniciativas.filter(x=>x.activa).length;
+  document.getElementById('s-tot').textContent=alumnos.length;document.getElementById('s-ok').textContent=ok;document.getElementById('s-par').textContent=par;document.getElementById('s-atr').textContent=atr;
+  document.getElementById('s-ing').textContent='$'+Math.round(ing/1000)+'k';document.getElementById('s-egr').textContent='$'+Math.round(egr/1000)+'k';document.getElementById('s-sal').textContent='$'+Math.round((ing-egr)/1000)+'k';document.getElementById('s-inic').textContent=inicAct;
+  const curM=new Date().getMonth();
+  document.getElementById('months-grid').innerHTML=MESES.map((m,i)=>{const ri=i+2,pm=pagos.filter(p=>p.mes===m);let cls='mp';if(pm.length>0)cls+=ri<=curM?' done':' cur';else if(ri===curM)cls+=' cur';return`<div class="${cls}"><span>${m.slice(0,3)}</span><span>${pm.length?pm.length+'p':ri===curM?'actual':'—'}</span></div>`;}).join('');
+  const rtb=document.getElementById('rec-tbody'),rec=pagos.slice(0,5);
+  if(!rec.length){rtb.innerHTML='<tr><td colspan="7" class="nd">Sin pagos aún 🦩</td></tr>';return;}
+  rtb.innerHTML=rec.map(p=>{const a=alumnos.find(x=>x.id===p.alumno_id);return`<tr><td>${a?a.ap1+' '+a.nombre:p.alumno_nombre}</td><td style="font-size:.7rem">${p.emisor||'—'}</td><td><strong>${clp(p.monto)}</strong></td><td>${p.mes}</td><td style="font-size:.69rem;color:var(--ts)">${p.fecha||'—'}</td><td style="font-size:.69rem;color:var(--ts)">${p.operacion||'—'}</td><td><span class="badge ok">✅</span></td></tr>`;}).join('');
+  const di=document.getElementById('dash-iniciativas'),iAct=iniciativas.filter(x=>x.activa);
+  if(!iAct.length){di.innerHTML='<div class="nd">Sin actividades activas</div>';return;}
+  di.innerHTML=iAct.map(inic=>{const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id),part=new Set(pags.map(p=>p.alumno_id)).size,tot=pags.reduce((s,p)=>s+(p.mostrar_monto?p.monto||0:0),0),pct=alumnos.length?Math.round(part/alumnos.length*100):0;
+    return`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--bd)"><div style="font-size:19px">${inic.tipo==='actividad'?'🎽':'❤️'}</div><div style="flex:1"><div style="font-size:.81rem;font-weight:700">${inic.nombre}${inic.fecha_limite?`<span style="font-size:.68rem;color:var(--ts);font-weight:400"> · Límite: ${inic.fecha_limite}</span>`:''}</div><div style="font-size:.7rem;color:var(--ts)">${part}/${alumnos.length} alumnos · ${inic.mostrar_monto||isTesorero?clp(tot):pct+'% participaron'}</div><div class="pb" style="margin-top:3px"><div class="pf-pk" style="width:${pct}%"></div></div></div><button class="btn bsm bp" onclick="showTab('iniciativas')">Ver</button></div>`;
+  }).join('');
+}
+
+// ── EXPORTAR ──────────────────────────────────────────────────
+function renderExport(){
+  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0),egr=egresos.reduce((s,e)=>s+(e.monto||0),0),iIngTotal=pagosInic.reduce((s,p)=>s+(p.mostrar_monto?p.monto||0:0),0);
+  document.getElementById('ex-ing').textContent=clp(ing);document.getElementById('ex-inic').textContent=clp(iIngTotal);document.getElementById('ex-egr').textContent=clp(egr);document.getElementById('ex-sal').textContent=clp(ing+iIngTotal-egr);
+  const prev=document.getElementById('prev-tbl');
+  prev.innerHTML=`<table><thead><tr><th>#</th><th>Alumno</th><th>Apellidos</th>${MESES.map(m=>`<th>${m.slice(0,3)}</th>`).join('')}<th>Total</th><th>%</th></tr></thead><tbody>${alumnos.map((a,i)=>{const pa=pagos.filter(p=>p.alumno_id===a.id),mP=pa.map(p=>p.mes),tot=pa.reduce((s,p)=>s+(p.monto||0),0),pct=Math.round(tot/(CUOTA*MESES.length)*100);return`<tr><td style="font-size:.68rem;color:var(--ts)">${i+1}</td><td style="font-size:.75rem">${a.nombre}</td><td style="font-size:.72rem"><strong>${a.ap1}</strong> ${a.ap2}</td>${MESES.map(m=>`<td style="text-align:center;font-size:.73rem">${mP.includes(m)?'✅':'—'}</td>`).join('')}<td style="font-size:.73rem"><strong>${clp(tot)}</strong></td><td style="font-size:.71rem;color:${pct>=100?'#0d6b5e':pct>0?'#8a6600':'#b52b2b'}">${pct}%</td></tr>`;}).join('')}</tbody></table>`;
+  const pi=document.getElementById('prev-inic');
+  if(!iniciativas.length){pi.innerHTML='<div class="nd">Sin actividades</div>';return;}
+  pi.innerHTML=`<div class="tw"><table><thead><tr><th>Actividad</th><th>Tipo</th>${alumnos.map(a=>`<th style="min-width:55px;font-size:.61rem">${a.ap1}</th>`).join('')}<th>Particip.</th></tr></thead><tbody>${iniciativas.map(inic=>{const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id);return`<tr><td style="font-size:.73rem"><strong>${inic.nombre}</strong></td><td><span class="badge ${inic.tipo==='actividad'?'info':'pkb'}">${inic.tipo==='actividad'?'🎽':'❤️'}</span></td>${alumnos.map(a=>{const p=pags.find(x=>x.alumno_id===a.id);return`<td style="text-align:center;font-size:.71rem">${p?(inic.mostrar_monto&&p.monto?clp(p.monto):'✅'):'—'}</td>`;}).join('')}<td style="font-size:.73rem">${new Set(pags.map(p=>p.alumno_id)).size}/${alumnos.length}</td></tr>`;}).join('')}</tbody></table></div>`;
+}
 function exportExcel(){
   const wb=XLSX.utils.book_new();
-  // Cuotas
-  const h1=[['#','Nombre','Ap. Paterno','Ap. Materno','Sexo','Mamá','Ape.Mamá','Papá','Ape.Papá',...MESES,'Total','Esperado','%','Estado']];
+  const h1=[['#','Nombre','Ap.Paterno','Ap.Materno','Sexo','Mamá','Ape.Mamá','Papá','Ape.Papá',...MESES,'Total','Esperado','%','Estado']];
   alumnos.forEach((a,i)=>{const pa=pagos.filter(p=>p.alumno_id===a.id),mP=pa.map(p=>p.mes),tot=pa.reduce((s,p)=>s+(p.monto||0),0);h1.push([i+1,a.nombre,a.ap1,a.ap2,a.sexo,a.mama_n,a.mama_a,a.papa_n,a.papa_a,...MESES.map(m=>mP.includes(m)?'PAGADO':'—'),tot,CUOTA*MESES.length,Math.round(tot/(CUOTA*MESES.length)*100)+'%',getEst(a.id)]);});
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(h1),'Cuotas');
-  // Detalle pagos
   const h2=[['#','Alumno','Mes','Monto','Fecha','N° Op','Banco','Emisor','Notas']];
   pagos.forEach((p,i)=>{const a=alumnos.find(x=>x.id===p.alumno_id);h2.push([i+1,a?`${a.ap1} ${a.nombre}`:p.alumno_nombre,p.mes,p.monto,p.fecha,p.operacion,p.banco,p.emisor,p.notas]);});
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(h2),'Detalle Cuotas');
-  // Actividades
   const h3=[['Actividad','Tipo','Descripción','Monto/Alumno','Fecha Límite','Participantes','Recaudado']];
   iniciativas.forEach(inic=>{const pags=pagosInic.filter(p=>p.iniciativa_id===inic.id),part=new Set(pags.map(p=>p.alumno_id)).size,tot=pags.reduce((s,p)=>s+(p.mostrar_monto?p.monto||0:0),0);h3.push([inic.nombre,inic.tipo,inic.descripcion,inic.monto_total||'libre',inic.fecha_limite||'—',`${part}/${alumnos.length}`,tot]);});
-  h3.push([]);
-  // Detalle pagos iniciativas
-  h3.push(['#','Actividad','Alumno','Monto','Fecha','N° Op','Banco','Emisor']);
+  h3.push([],['#','Actividad','Alumno','Monto','Fecha','N° Op','Banco','Emisor']);
   pagosInic.forEach((p,i)=>{const a=alumnos.find(x=>x.id===p.alumno_id);const inic=iniciativas.find(x=>x.id===p.iniciativa_id);h3.push([i+1,inic?inic.nombre:'?',a?`${a.ap1} ${a.nombre}`:p.alumno_nombre,p.mostrar_monto?p.monto:'[oculto]',p.fecha,p.operacion,p.banco,p.emisor]);});
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(h3),'Actividades y Donaciones');
-  // Estado de resultados
-  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0);
-  const iIngTotal=pagosInic.reduce((s,p)=>s+(p.mostrar_monto?p.monto||0:0),0);
-  const egr=egresos.reduce((s,e)=>s+(e.monto||0),0);
-  const h4=[['ESTADO DE RESULTADOS — KINDER FLAMINGO 2026'],[''],['INGRESOS',''],['  Cuotas mensuales',ing],['  Actividades y donaciones',iIngTotal],['  TOTAL INGRESOS',ing+iIngTotal],[''],['EGRESOS','']];
-  egresos.forEach((e,i)=>h4.push([`  ${i+1}. ${e.actividad}`,e.monto]));
-  h4.push(['  TOTAL EGRESOS',egr],[''],['RESULTADO NETO',ing+iIngTotal-egr]);
+  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0),iT=pagosInic.reduce((s,p)=>s+(p.mostrar_monto?p.monto||0:0),0),egr=egresos.reduce((s,e)=>s+(e.monto||0),0);
+  const h4=[['ESTADO DE RESULTADOS — KINDER FLAMINGO 2026'],[''],['INGRESOS'],['  Cuotas mensuales',ing],['  Actividades y donaciones',iT],['  TOTAL INGRESOS',ing+iT],[''],['EGRESOS']];
+  egresos.forEach((e,i)=>h4.push([`  ${i+1}. ${e.actividad}`,e.monto]));h4.push(['  TOTAL EGRESOS',egr],[''],['RESULTADO NETO',ing+iT-egr]);
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(h4),'Estado de Resultados');
-  const h5=[['#','Actividad','Descripción','Categoría','Fecha','Monto']];
-  egresos.forEach((e,i)=>h5.push([i+1,e.actividad,e.descripcion,e.categoria,e.fecha,e.monto]));
-  h5.push([],['',' ',' ',' ','TOTAL',egr]);
+  const h5=[['#','Actividad','Descripción','Categoría','Fecha','Monto']];egresos.forEach((e,i)=>h5.push([i+1,e.actividad,e.descripcion,e.categoria,e.fecha,e.monto]));h5.push([],['',' ',' ',' ','TOTAL',egr]);
   XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(h5),'Egresos');
   XLSX.writeFile(wb,'Kinder_Flamingo_2026.xlsx');
 }
-function exportCSV(){
-  const rows=[['#','Nombre','Ap.Paterno','Ap.Materno',...MESES,'Total','Estado']];
-  alumnos.forEach((a,i)=>{const pa=pagos.filter(p=>p.alumno_id===a.id);rows.push([i+1,a.nombre,a.ap1,a.ap2,...MESES.map(m=>pa.map(p=>p.mes).includes(m)?'Pagado':'Pendiente'),pa.reduce((s,p)=>s+(p.monto||0),0),getEst(a.id)]);});
-  const csv=rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
-  const el=document.createElement('a');el.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));el.download='Flamingo_2026.csv';el.click();
-}
+function exportCSV(){const rows=[['#','Nombre','Ap.Paterno','Ap.Materno',...MESES,'Total','Estado']];alumnos.forEach((a,i)=>{const pa=pagos.filter(p=>p.alumno_id===a.id);rows.push([i+1,a.nombre,a.ap1,a.ap2,...MESES.map(m=>pa.map(p=>p.mes).includes(m)?'Pagado':'Pendiente'),pa.reduce((s,p)=>s+(p.monto||0),0),getEst(a.id)]);});const csv=rows.map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');const el=document.createElement('a');el.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));el.download='Flamingo_2026.csv';el.click();}
 
-function renderAll(){renderDash();renderAlumnos();renderEgresos();renderExport();}
+function renderAll(){renderDash();renderAlumnos();renderEgresos();renderHistorial();renderExport();}
 
-// ── INIT ──────────────────────────────────────
-hoy('p-fec');hoy('e-fec');hoy('mp-fec');
-toggleTipoForm();
-loadAll();
+// ── INIT ──────────────────────────────────────────────────────
+hoy('p-fec');hoy('e-fec');hoy('mp-fec');toggleTipoForm();loadAll();
 </script>
 </body>
 </html>
