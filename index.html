@@ -272,7 +272,7 @@ input:checked+.slider:before{transform:translateX(17px)}
   <button class="ntab tsor" onclick="showTab('registrar')">➕ Cuota Mensual</button>
   <button class="ntab" onclick="showTab('iniciativas')">🎽 Actividades</button>
   <button class="ntab tsor" onclick="showTab('egresos')">💸 Egresos</button>
-  <button class="ntab" onclick="showTab('comprobantes')">📎 Comprobantes</button>
+  <button class="ntab" onclick="showTab('egresos-pub')">💸 Egresos</button>
   <button class="ntab tsor" onclick="showTab('exportar')">📥 Exportar</button>
 </div>
 
@@ -411,10 +411,31 @@ input:checked+.slider:before{transform:translateX(17px)}
     </div>
   </div>
 
-  <!-- COMPROBANTES -->
-  <div class="sec" id="sec-comprobantes">
-    <div class="card"><h3>📎 Comprobantes — Cuotas mensuales</h3><div id="comp-list"><div class="nd"><span class="spin"></span>Cargando...</div></div></div>
-    <div class="card"><h3>🎽 Comprobantes — Actividades y donaciones</h3><div id="comp-inic-list"><div class="nd"><span class="spin"></span>Cargando...</div></div></div>
+  <!-- EGRESOS PÚBLICO -->
+  <div class="sec" id="sec-egresos-pub">
+    <div class="card">
+      <h3>💸 Egresos del curso 2026</h3>
+      <p style="font-size:.78rem;color:var(--ts);margin-bottom:12px">Registro de todos los gastos realizados con los fondos del curso.</p>
+      <div class="tw" id="pub-egr-tbl">
+        <table><thead><tr><th>#</th><th>Actividad</th><th>Descripción</th><th>Categoría</th><th>Fecha</th><th>Monto</th></tr></thead>
+        <tbody id="pub-egr-tbody"><tr><td colspan="6" class="nd"><span class="spin"></span>Cargando...</td></tr></tbody>
+        </table>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:10px 14px;background:var(--abl);border-radius:9px;flex-wrap:wrap;gap:8px">
+        <div>
+          <span style="font-size:.77rem;color:var(--ts);font-weight:700">Total ingresos (cuotas): </span>
+          <span style="font-family:'Fredoka One',sans-serif;font-size:1.05rem;color:var(--tl)" id="pub-ing">$0</span>
+        </div>
+        <div>
+          <span style="font-size:.77rem;color:var(--ts);font-weight:700">Total egresos: </span>
+          <span style="font-family:'Fredoka One',sans-serif;font-size:1.05rem;color:var(--co)" id="pub-egr-tot">$0</span>
+        </div>
+        <div>
+          <span style="font-size:.77rem;color:var(--ts);font-weight:700">Saldo disponible: </span>
+          <span style="font-family:'Fredoka One',sans-serif;font-size:1.05rem;color:var(--ab)" id="pub-saldo">$0</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- EXPORTAR -->
@@ -500,12 +521,12 @@ function showTab(t){
   if(['registrar','egresos','exportar'].includes(t)&&!isTesorero){showLogin();return;}
   document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.ntab').forEach(x=>x.classList.remove('active'));
-  const i={dashboard:0,alumnos:1,registrar:2,iniciativas:3,egresos:4,comprobantes:5,exportar:6}[t]??0;
+  const i={dashboard:0,alumnos:1,registrar:2,iniciativas:3,egresos:4,'egresos-pub':5,exportar:6}[t]??0;
   document.querySelectorAll('.ntab')[i].classList.add('active');
   document.getElementById('sec-'+t).classList.add('active');
   if(t==='registrar'){popSel('p-alu');hoy('p-fec');renderHistorial();}
   if(t==='egresos'){renderEgresos();hoy('e-fec');}
-  if(t==='comprobantes')renderComp();
+  if(t==='egresos-pub')renderEgresosPub();
   if(t==='exportar')renderExport();
   if(t==='alumnos')renderAlumnos();
   if(t==='iniciativas')renderIniciativas();
@@ -828,18 +849,23 @@ async function guardarEditPinic(){
 }
 async function delPagoInic(id){if(!isTesorero||!confirm('¿Eliminar este pago?'))return;const{error}=await sb.rpc('rpc_eliminar_pago_iniciativa',{p_pass:TSOR_PASS,p_id:id});if(error){alert(error.message);return;}pagosInic=pagosInic.filter(x=>x.id!==id);renderIniciativas();renderDash();}
 
-// ── COMPROBANTES ──────────────────────────────────────────────
-async function renderComp(){
-  const d1=document.getElementById('comp-list'),pc=pagos.filter(p=>p.comp_path);
-  d1.innerHTML=!pc.length?'<div class="nd">Sin comprobantes</div>':await buildCompHTML(pc,p=>{const a=alumnos.find(x=>x.id===p.alumno_id);return(a?`${a.ap1} ${a.nombre}`:p.alumno_nombre)+' · '+p.mes;});
-  const d2=document.getElementById('comp-inic-list'),pi=pagosInic.filter(p=>p.comp_path);
-  d2.innerHTML=!pi.length?'<div class="nd">Sin comprobantes</div>':await buildCompHTML(pi,p=>{const a=alumnos.find(x=>x.id===p.alumno_id);const inic=iniciativas.find(x=>x.id===p.iniciativa_id);return(a?`${a.ap1} ${a.nombre}`:p.alumno_nombre)+' · '+(inic?inic.nombre:'?');});
-}
-async function buildCompHTML(list,labelFn){
-  let html='';
-  for(const p of list){const isImg=/\.(jpg|jpeg|png|webp)$/i.test(p.comp_path);const{data:ud}=sb.storage.from('comprobantes').getPublicUrl(p.comp_path);const url=ud?.publicUrl||'#';
-    html+=`<div style="display:flex;align-items:center;gap:9px;padding:9px 11px;border-bottom:1px solid var(--abll)"><div style="width:32px;height:32px;border-radius:8px;background:var(--abl);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0">${isImg?'🖼️':'📄'}</div><div style="flex:1"><strong style="font-size:.78rem">${labelFn(p)}</strong><br><span style="font-size:.68rem;color:var(--ts)">${p.fecha||'—'} · ${p.emisor||'—'}</span></div>${isImg?`<a href="${url}" target="_blank"><img src="${url}" style="width:40px;height:40px;object-fit:cover;border-radius:7px;border:1px solid var(--bd)"></a>`:`<a href="${url}" target="_blank" style="font-size:.69rem;color:var(--tl);font-weight:700">⬇️ Abrir</a>`}</div>`;
-  }return html;
+// ── EGRESOS PÚBLICO ───────────────────────────────────────────
+function renderEgresosPub(){
+  const tb=document.getElementById('pub-egr-tbody');
+  const ing=pagos.reduce((s,p)=>s+(p.monto||0),0);
+  const tot=egresos.reduce((s,e)=>s+(e.monto||0),0);
+  document.getElementById('pub-ing').textContent=clp(ing);
+  document.getElementById('pub-egr-tot').textContent=clp(tot);
+  document.getElementById('pub-saldo').textContent=clp(ing-tot);
+  if(!egresos.length){tb.innerHTML='<tr><td colspan="6" class="nd">Sin egresos registrados 🦩</td></tr>';return;}
+  tb.innerHTML=egresos.map((e,i)=>`<tr>
+    <td style="font-size:.69rem;color:var(--ts)">${i+1}</td>
+    <td><strong>${e.actividad}</strong></td>
+    <td style="font-size:.75rem">${e.descripcion||'—'}</td>
+    <td><span class="badge info" style="font-size:.65rem">${e.categoria}</span></td>
+    <td style="font-size:.7rem;color:var(--ts)">${e.fecha||'—'}</td>
+    <td><strong>${clp(e.monto)}</strong></td>
+  </tr>`).join('');
 }
 
 // ── DASHBOARD ─────────────────────────────────────────────────
